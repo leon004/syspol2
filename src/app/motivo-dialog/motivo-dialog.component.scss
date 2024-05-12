@@ -1,0 +1,48 @@
+.clickable-item {
+  cursor: pointer;
+  &:hover {
+    background-color: #e0e0e0;  // Color de fondo al pasar el ratón por encima
+  }
+}
+mat-dialog-content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.motivo-list-item {
+  margin-bottom: 12px; // Separación entre cada opción
+  padding: 8px 16px; // Ajusta el relleno interno para cada opción
+
+  &:hover {
+    background-color: #f0f0f0; // Cambia el color al pasar el ratón por encima
+    cursor: pointer;
+  }
+}
+
+mat-dialog-title {
+  text-align: center; // Centrar el título del diálogo
+  font-weight: bold;
+}
+
+mat-dialog-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+mat-form-field {
+  width: 100%; // Asegúrate de que el campo de búsqueda ocupe todo el ancho disponible
+  margin-bottom: 15px; // Espacio antes de la lista
+}
+
+.motivo-list-item {
+  margin-bottom: 0; // Remueve el margen si anteriormente lo añadiste
+  padding: 8px 16px;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+mat-divider {
+  margin-left: 0; // Extiende el divisor a todo el ancho si es necesario
+  margin-right: 0;
+}

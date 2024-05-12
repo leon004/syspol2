@@ -1,0 +1,555 @@
+[
+  {
+      "id_motivo": 1,
+      "motivo": "No presentar Tarjeta de Circulación o presentarla vencida",
+      "articulo": "Articulo 32",
+      "tipo": 1,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 2,
+      "motivo": "No portar holograma de circulación",
+      "articulo": "Articulo 33, fraccion I",
+      "tipo": 1,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 3,
+      "motivo": "Traer parabrisas estrellados o polarizados, o con cualquier otro aditamento que impida la Visibilidad.",
+      "articulo": "Articulo 35, fraccion I",
+      "tipo": 2,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 4,
+      "motivo": "Carecer de luces direccionales de destello, faros, cuartos, reflejantes, indicadoras de reversa y luz roja trasera.",
+      "articulo": "Articulo 35, fraccion I",
+      "tipo": 2,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 5,
+      "motivo": "Escape fuera de lugar autorizado, en mal estado o con alteración de características.",
+      "articulo": "Articulo 35, fraccion I",
+      "tipo": 2,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 6,
+      "motivo": "Falta del tapón del tanque de combustible.",
+      "articulo": "Articulo 35, fraccion I",
+      "tipo": 2,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 7,
+      "motivo": "Transporte escolar.",
+      "articulo": "Articulo 35, fraccion I",
+      "tipo": 2,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 8,
+      "motivo": "Realizar ascenso y descenso de pasajeros en lugares no autorizados para tal efecto.",
+      "articulo": "Articulo 36, fraccion IV",
+      "tipo": 3,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 9,
+      "motivo": "Rebasar el cupo establecido en la tarjeta de circulación.",
+      "articulo": "Articulo 36, fraccion IV",
+      "tipo": 3,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 10,
+      "motivo": "Falta de lona en carga que se esparce.",
+      "articulo": "Articulo 37, fraccion XI",
+      "tipo": 4,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 11,
+      "motivo": "No respetar rutas, horarios de Maniobras de carga y descarga.",
+      "articulo": "Articulo 37, fraccion XI",
+      "tipo": 4,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 12,
+      "motivo": "Falta de abanderamiento con unidad piloto, a los vehículos que trasladen maquinaria cuyas dimensiones excedan un carril de circulación.",
+      "articulo": "Articulo 37, fraccion XI",
+      "tipo": 4,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 15,
+      "motivo": "Llevar a bordo personas ajenas a su operación.",
+      "articulo": "Articulo 40, fraccion XIV",
+      "tipo": 5,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 16,
+      "motivo": "No sujetarse a los horarios y rutas, que para maniobras de carga y descarga establece este Reglamento.",
+      "articulo": "Articulo 41, fraccion XIV",
+      "tipo": 5,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 17,
+      "motivo": "Circular en carriles centrales o tercer carril, contados de derecha a izquierda.",
+      "articulo": "Articulo 41, fraccion XIV",
+      "tipo": 5,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 18,
+      "motivo": "Estacionarse en zonas de riesgo o lugares prohibidos.",
+      "articulo": "Articulo 44, fraccion XIV",
+      "tipo": 5,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 19,
+      "motivo": "No utilizar el Cinturón de Seguridad, debidamente colocado y ajustado.",
+      "articulo": "Articulo 46, fraccion XVI",
+      "tipo": 6,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 20,
+      "motivo": "Estacionarse en lugar prohibido, en doble o más filas.",
+      "articulo": "Articulo 46, fraccion XVI",
+      "tipo": 6,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 21,
+      "motivo": "Rebasar el cupo de pasajeros autorizados en la tarjeta de circulación.",
+      "articulo": "Articulo 46, fraccion XVI",
+      "tipo": 6,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 22,
+      "motivo": "Uso del teléfono celular al conducir.",
+      "articulo": "Articulo 46, fraccion XVI",
+      "tipo": 6,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 23,
+      "motivo": "No respetar el programa uno y uno.",
+      "articulo": "Articulo 46, fraccion XVI",
+      "tipo": 6,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 24,
+      "motivo": "Conducir con personas, animales u objetos en los brazos y/o piernas.",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 25,
+      "motivo": "Entorpecer la circulación.",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 26,
+      "motivo": "Efectuar arrancones, competencias o acrobacias de cualquier tipo de vehículo, sin permiso de la autoridad municipal.",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 27,
+      "motivo": "Realizar acciones ajenas a la conducción del vehículo",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 28,
+      "motivo": "No ceder el paso a vehículos de emergencias, aun cuando estos lleven encendidas las torretas./Seguirlos en su trayectoria",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 29,
+      "motivo": "Circular sobre banquetas",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 30,
+      "motivo": "Circular en sentido contrario.",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 31,
+      "motivo": "No respetar los límites de velocidad establecidos en el presente reglamento.",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 32,
+      "motivo": "Instalar o utilizar radares o antiradares",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 33,
+      "motivo": "Instalar o utilizar elementos para evitar lectura de placa por dispositivos",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 34,
+      "motivo": "Circular sin placas.",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 35,
+      "motivo": "Circular o estacionar en zona exclusiva para uso ciclista",
+      "articulo": "Articulo 47, fraccion XVIII",
+      "tipo": 7,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 36,
+      "motivo": "No usar casco",
+      "articulo": "Articulo 48, fraccion V, VI",
+      "tipo": 8,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 37,
+      "motivo": "Circular en sentido contrario.",
+      "articulo": "Articulo 49, fraccion ",
+      "tipo": 8,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 38,
+      "motivo": "Circular sin placas",
+      "articulo": "Articulo 49, fraccion ",
+      "tipo": 8,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 39,
+      "motivo": "Circular sobre banquetas",
+      "articulo": "Articulo 49, fraccion ",
+      "tipo": 8,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 40,
+      "motivo": "Llevar carga que obstruya la visibilidad, equilibrio u operación adecuada del vehículo.",
+      "articulo": "Articulo 49, fraccion ",
+      "tipo": 8,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 41,
+      "motivo": "Transitar por carriles centrales o interiores de las vías primarias.",
+      "articulo": "Articulo 49, fraccion ",
+      "tipo": 8,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 42,
+      "motivo": "Conducir sin Licencia y/o Permiso no están vigentes.",
+      "articulo": "Articulo 50, fraccion ",
+      "tipo": 9,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 43,
+      "motivo": "No acatar las indicaciones o señales de los oficiales de tránsito en casos especiales y de emergencia.",
+      "articulo": "Articulo 55, fraccion ",
+      "tipo": 10,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 44,
+      "motivo": "No respetar la prioridad de paso de vehículos en cruceros donde converjan dos o más avenidas, calles o caminos.",
+      "articulo": "Articulo 57, fraccion ",
+      "tipo": 10,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 45,
+      "motivo": "No respetar la prioridad de paso de vehículos en cruceros o intersecciones donde no existan señales gráficas, no se encuentren funcionando semáforos y no esté regulado el flujo vehicular por un Policía.",
+      "articulo": "Articulo 58, fraccion ",
+      "tipo": 10,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 46,
+      "motivo": "No respetar el tránsito en las calles y avenidas.",
+      "articulo": "62",
+      "tipo": 10,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 47,
+      "motivo": "No acatar lo establecido para realizar maniobras de rebase.",
+      "articulo": "Articulo 65, fraccion ",
+      "tipo": 11,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 48,
+      "motivo": "No respetar las prohibiciones de la maniobra de rebase.",
+      "articulo": "Articulo 65, fraccion ",
+      "tipo": 11,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 49,
+      "motivo": "No respetar las  disposiciones  establecidas para  realizar  las maniobras de vueltas.",
+      "articulo": "Articulo 69, fraccion ",
+      "tipo": 12,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 50,
+      "motivo": "No respetar las disposiciones que prohíben las vueltas en U.",
+      "articulo": "Articulo 72, fraccion ",
+      "tipo": 12,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 51,
+      "motivo": "No conservar la distancia entre un vehículo y otro.",
+      "articulo": "Articulo 75, fraccion  y 76",
+      "tipo": 12,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 52,
+      "motivo": "No   ceder   el   paso   al   salir   de   cocheras   o   cajones   de estacionamiento.",
+      "articulo": "Articulo 79, fraccion ",
+      "tipo": 12,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 53,
+      "motivo": "No guardar la distancia para hacer alto total, antes del cruce de ferrocarril.",
+      "articulo": "Articulo 80, fraccion ",
+      "tipo": 12,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 54,
+      "motivo": "Estacionar remolque y semirremolque en vía pública.",
+      "articulo": "Articulo 86, fraccion ",
+      "tipo": 14,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 55,
+      "motivo": "Las empresas estacionen flotillas de vehículos, frente o a los alrededores de los domicilios de su razón social.",
+      "articulo": "Articulo 87, fraccion ",
+      "tipo": 14,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 57,
+      "motivo": "Si se trata de vehículos del servicio público estacionados en lugares considerados prohibidos conforme a celda anterior. Agravante.",
+      "articulo": "Articulo 88, fraccion ",
+      "tipo": 14,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 58,
+      "motivo": "Alterar, destruir, derribar, cubrir, cambiar de posición o lugar las señales o dispositivos para el control de tránsito.",
+      "articulo": "Articulo 82, fraccion ",
+      "tipo": 13,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 59,
+      "motivo": "Colocar   bordos,   barreras,   aplicar   pintura   en   calles   o banquetas.",
+      "articulo": "Articulo 82, fraccion ",
+      "tipo": 13,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 60,
+      "motivo": "Reparar o dar mantenimiento a vehículos en la vía pública.",
+      "articulo": "Articulo 82, fraccion ",
+      "tipo": 13,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 61,
+      "motivo": "Estacionarse en los lugares considerados prohibidos en el presente reglamento. Se aumentará en 5 días de salario mínimo, cuando se trate de la conducta prevista en la fracción XV de este mismo artículo.",
+      "articulo": "Articulo 88, fraccion ",
+      "tipo": 14,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 62,
+      "motivo": "No respetar señales manuales humanas.",
+      "articulo": "Articulo 90, fraccion ",
+      "tipo": 15,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 63,
+      "motivo": "No respetar señales canalizadoras como son barreras, conos, indicadores de alineamiento.",
+      "articulo": "Articulo 92, fraccion ",
+      "tipo": 16,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 64,
+      "motivo": "No respetar señales luminosas como lámpara de destellos y luces eléctricas.",
+      "articulo": "Articulo 93, fraccion ",
+      "tipo": 17,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 65,
+      "motivo": "No respetar señales auditivas como sonido de sirena o pitos.",
+      "articulo": "Articulo 93, fraccion ",
+      "tipo": 17,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 66,
+      "motivo": "Transitar   sin   luces   delanteras   y   traseras   encendidas   durante   la noche,  o  cuando  existan  condiciones  climatológicas  adversas.",
+      "articulo": "Articulo 97, fraccion ",
+      "tipo": 18,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 67,
+      "motivo": "No utilizar las luces direccionales o de destello, luces delanteras o traseras cuando las condiciones climáticas reduzcan la visibilidad, en condiciones de lluvia, neblina o cuando se circule en horas de obscuridad.",
+      "articulo": "Articulo 97, fraccion ",
+      "tipo": 18,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 68,
+      "motivo": "No utilizar las luces direccionales o de destello, luces delanteras o traseras cuando las condiciones climáticas reduzcan la visibilidad, en condiciones de lluvia, neblina o cuando se circule en horas de obscuridad.",
+      "articulo": "Articulo 97, fraccion ",
+      "tipo": 18,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 69,
+      "motivo": "No respetar señales de los oficiales de tránsito.",
+      "articulo": "Articulo 10, fraccion 2",
+      "tipo": 19,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 70,
+      "motivo": "No respetar las indicaciones de los Agentes de Tránsito.",
+      "articulo": "Articulo 10, fraccion 2",
+      "tipo": 19,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 71,
+      "motivo": "No seguir los señalamientos de los oficiales de tránsito en caso de accidente, para que el tránsito sea más expedito.",
+      "articulo": "Articulo 10, fraccion 2",
+      "tipo": 19,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 72,
+      "motivo": "No respetar los señalamientos de los Agentes de Tránsito en caso de accidente, para que el tránsito sea más expedito.",
+      "articulo": "Articulo 10, fraccion 2",
+      "tipo": 19,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 73,
+      "motivo": "Conducir vehículo automotor con placas sobrepuestas o en su defecto no coincidentes con el sistema de identificación vehicular.",
+      "articulo": "Articulo 10, fraccion 8",
+      "tipo": 21,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 74,
+      "motivo": "Instalar en un vehículo dispositivos mecánicos o electrónicos para anular o alterar la lectura de los dispositivos de control vehicular establecidos por las autoridades.",
+      "articulo": "Articulo 10, fraccion 8",
+      "tipo": 21,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 75,
+      "motivo": "Instalar, operar o tener en funcionamiento un sistema de luces de estrobos en cualquier parte del vehículo, en vías públicas.",
+      "articulo": "Articulo 10, fraccion 8",
+      "tipo": 21,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 76,
+      "motivo": "Instalar, operar o tener en funcionamiento un sistema de luces de estrobos en cualquier parte del vehículo, en vías públicas.",
+      "articulo": "Articulo 10, fraccion 8",
+      "tipo": 21,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 77,
+      "motivo": "Circular con polarizado en el parabrisas.",
+      "articulo": "Articulo 10, fraccion 8",
+      "tipo": 21,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 78,
+      "motivo": "Circular con polarizado en los medallones laterales y/o traseros.",
+      "articulo": "Articulo 10, fraccion 8",
+      "tipo": 21,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 79,
+      "motivo": "Portar armas dentro del vehículo sin tener derecho a ello.",
+      "articulo": "Articulo 10, fraccion 8",
+      "tipo": 21,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 80,
+      "motivo": "No respetar la preferencia de paso de peatones, cuando estos crucen por áreas peatonales.",
+      "articulo": "Articulo 11, fraccion 3",
+      "tipo": 20,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 81,
+      "motivo": "No respetar la preferencia de paso de peatones, cuando estos crucen por áreas peatonales.",
+      "articulo": "Articulo 11, fraccion 3",
+      "tipo": 20,
+      "publicacion": "REGLAMENTO 2017"
+  },
+  {
+      "id_motivo": 82,
+      "motivo": "No respetar la preferencia de paso de peatones, cuando estos crucen por áreas peatonales.",
+      "articulo": "Articulo 11, fraccion 3",
+      "tipo": 20,
+      "publicacion": "REGLAMENTO 2017"
+  }
+]

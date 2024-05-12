@@ -1,0 +1,24 @@
+<h2 class="text-2xl font-bold text-center text-gray-800 p-4">Seleccione un Motivo</h2>
+<mat-dialog-content class="p-4">
+  <!-- Campo de búsqueda -->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="search-motivo">Buscar Motivo</label>
+    <input id="search-motivo" type="text" placeholder="Ingrese el motivo o artículo..."
+           (input)="applyFilter($event)"
+           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+  </div>
+
+  <div class="my-2 border-t border-gray-200"></div> <!-- Línea antes de la lista -->
+
+  <ul class="divide-y divide-gray-200">
+    <li *ngFor="let motivo of filteredMotivosInfraccion" (click)="selectMotivo(motivo)" class="p-2 hover:bg-gray-100 cursor-pointer">
+      <p class="text-gray-800 text-sm">{{ motivo.motivo }}</p>
+      <p class="text-gray-600 text-xs">Artículo/Fracción: {{ motivo.articulo }}</p>
+    </li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions class="justify-end p-4">
+  <button mat-button mat-dialog-close class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+    Cancelar
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,168 @@
+<div class="container mt-5 mx-auto px-4">
+  <div class="flex justify-center">
+    <div class="max-w-lg w-full">
+      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="bg-blue-600 text-center py-4">
+          <h2 class="text-white text-2xl font-semibold">Registrar Infracción</h2>
+        </div>
+        <div class="p-6 space-y-6">
+          <form [formGroup]="infractionForm" (ngSubmit)="onSubmit()">
+            <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
+              <!-- Paso 1: Información del Policía y Vehículo -->
+              <mat-step [stepControl]="infractionForm.controls['step1']" formGroupName="step1" label="Información del Policía y Vehículo">
+                <ng-template matStepLabel>Paso 1</ng-template>
+                <div class="space-y-4">
+                  <div>
+                    <label for="policiaId" class="block text-sm font-medium text-gray-700">ID del Policía</label>
+                    <input
+                      id="policiaId"
+                      type="number"
+                      formControlName="policiaId"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Ingresa el ID del policía"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="placas" class="block text-sm font-medium text-gray-700">Placas</label>
+                    <input
+                      id="placas"
+                      type="text"
+                      formControlName="placas"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Ingresa las placas"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
+                    <select formControlName="estado" id="estado" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                      <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.viewValue }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="flex justify-between pt-4">
+                  <button mat-button matStepperNext class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-500">Siguiente</button>
+                </div>
+              </mat-step>
+
+              <!-- Paso 2: Detalles del Vehículo -->
+              <mat-step [stepControl]="infractionForm.controls['step2']" formGroupName="step2" label="Detalles del Vehículo">
+                <ng-template matStepLabel>Paso 2</ng-template>
+                <div class="space-y-4">
+                  <div>
+                    <label for="marca" class="block text-sm font-medium text-gray-700">Marca</label>
+                    <select formControlName="marca" id="marca" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                      <option *ngFor="let marca of marcas" [value]="marca.value">{{ marca.viewValue }}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="modelo" class="block text-sm font-medium text-gray-700">Modelo</label>
+                    <select formControlName="modelo" id="modelo" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                      <option *ngFor="let modelo of modelos" [value]="modelo">{{ modelo }}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="year" class="block text-sm font-medium text-gray-700">Año</label>
+                    <select formControlName="year" id="year" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                      <option *ngFor="let year of years" [value]="year.value">{{ year.viewValue }}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
+                    <input
+                      id="color"
+                      type="text"
+                      formControlName="color"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Ingresa el color del vehículo"
+                    />
+                  </div>
+                </div>
+                <div class="flex justify-between pt-4">
+                  <button mat-button matStepperPrevious class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-500">Anterior</button>
+                  <button mat-button matStepperNext class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-500">Siguiente</button>
+                </div>
+              </mat-step>
+
+              <!-- Paso 3: Información de la Infracción -->
+              <mat-step [stepControl]="infractionForm.controls['step3']" formGroupName="step3" label="Información de la Infracción">
+                <ng-template matStepLabel>Paso 3</ng-template>
+                <div class="space-y-4">
+                  <div>
+                    <label for="motivoDeMulta" class="block text-sm font-medium text-gray-700">Motivo de la Multa</label>
+                    <div class="flex items-center">
+                      <select formControlName="motivoDeMulta" id="motivoDeMulta" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" (change)="onMotivoChange()">
+                        <option *ngFor="let motivo of motivosInfraccion" [value]="motivo.id_motivo">{{ motivo.motivo }}</option>
+                      </select>
+                      <button mat-icon-button matTooltip="{{ selectedMotivo?.articulo }}" class="ml-2" *ngIf="selectedMotivo">
+                        <mat-icon>info</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="articuloFraccion" class="block text-sm font-medium text-gray-700">Artículo/Fracción</label>
+                    <input
+                      id="articuloFraccion"
+                      type="text"
+                      formControlName="articuloFraccion"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Automáticamente completado al seleccionar el motivo"
+                      readonly
+                    />
+                  </div>
+
+                  <div>
+                    <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
+                    <input
+                      id="ubicacion"
+                      type="text"
+                      formControlName="ubicacion"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Ingresa la ubicación de la infracción"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="nombreInfractor" class="block text-sm font-medium text-gray-700">Nombre del Infractor</label>
+                    <input
+                      id="nombreInfractor"
+                      type="text"
+                      formControlName="nombreInfractor"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Ingresa el nombre del infractor"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="imagenes" class="block text-sm font-medium text-gray-700">Imágenes (URLs separadas por comas)</label>
+                    <input
+                      id="imagenes"
+                      type="text"
+                      formControlName="imagenes"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Ingresa URLs de imágenes separadas por comas"
+                    />
+                  </div>
+                </div>
+                <div class="flex justify-between pt-4">
+                  <button mat-button matStepperPrevious class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-500">Anterior</button>
+                  <button type="submit" mat-button class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Registrar Infracción</button>
+                </div>
+              </mat-step>
+            </mat-horizontal-stepper>
+
+            <!-- Error general -->
+            <div *ngIf="formError" class="bg-red-100 text-red-600 mt-6 p-4 rounded-lg" role="alert">
+              {{ formError }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
