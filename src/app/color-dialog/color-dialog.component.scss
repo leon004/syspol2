@@ -1,0 +1,25 @@
+mat-dialog-content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.motivo-list-item {
+  margin-bottom: 12px; // Separación entre cada opción
+  padding: 8px 16px; // Ajusta el relleno interno para cada opción
+
+  &:hover {
+    background-color: #f0f0f0; // Cambia el color al pasar el ratón por encima
+    cursor: pointer;
+  }
+}
+
+mat-dialog-title {
+  text-align: center; // Centrar el título del diálogo
+  font-weight: bold;
+}
+
+mat-dialog-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}

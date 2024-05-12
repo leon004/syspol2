@@ -1,1 +1,12 @@
-<p>color-dialog works!</p>
+<h2 mat-dialog-title>Seleccione un Motivo</h2>
+<mat-dialog-content>
+  <mat-list>
+    <mat-list-item *ngFor="let motivo of motivosInfraccion" (click)="selectMotivo(motivo)" class="motivo-list-item">
+      <div mat-line>{{ motivo.motivo }}</div>
+      <div mat-line>Artículo/Fracción: {{ motivo.articulo }}</div>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>

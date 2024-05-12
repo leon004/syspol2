@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { InfractionService } from '../infraction.service';
 import { DataService } from '../data.service';
+import { ColorDialogComponent } from '../color-dialog/color-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MotivoDialogComponent } from '../motivo-dialog/motivo-dialog.component';
+
 
 interface Year {
   value: string;
@@ -29,8 +33,10 @@ export class InfractionFormComponent implements OnInit {
   modelos: string[] = [];
   estados: any[] = [];
   years: Year[] = [];
+  policiaId: string;
   motivosInfraccion: InfraccionMotivo[] = [];
   selectedMotivo: InfraccionMotivo | undefined;
+  images: string[] = [];
 
   colores = [
     { value: '#ff0000', name: 'Rojo' },
@@ -43,13 +49,20 @@ export class InfractionFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private infractionService: InfractionService,
-    private dataService: DataService
+    private dataService: DataService,
+    public dialog: MatDialog,
+
   ) {
+    // Obtener el policiaId y el usuario desde localStorage
+    this.policiaId = localStorage.getItem('policiaId') || '';
+    const usuario = localStorage.getItem('usuario') || '';
+
+    // Configurar el formulario
     this.infractionForm = this.fb.group({
       step1: this.fb.group({
-        policiaId: ['', Validators.required],
+        policiaId: [{ value: this.policiaId, disabled: true }, Validators.required],
         placas: ['', Validators.required],
-        pais: [''],
+        pais: ['México'], // País predeterminado
         estado: ['', Validators.required]
       }),
       step2: this.fb.group({
@@ -67,6 +80,7 @@ export class InfractionFormComponent implements OnInit {
       })
     });
 
+    // Obtener datos para los selectores
     this.dataService.getMarcas().subscribe(marcas => {
       this.marcas = marcas;
     });
@@ -85,6 +99,7 @@ export class InfractionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Actualizar la lista de modelos cuando se cambia la marca
     const marcaControl = this.infractionForm.get('step2.marca');
     if (marcaControl) {
       marcaControl.valueChanges.pipe(
@@ -98,6 +113,36 @@ export class InfractionFormComponent implements OnInit {
     }
   }
 
+
+
+
+
+  openColorDialog(){
+    const dialogRef = this.dialog.open(ColorDialogComponent);
+    dialogRef.afterClosed().subscribe(selectedColorName => {
+      if(selectedColorName){
+        console.log(`Selected Color: ${selectedColorName}`);
+        this.infractionForm.get('step2')?.get('color')?.setValue(selectedColorName);
+      }
+    });
+  }
+  openMotivoDialog() {
+    const dialogRef = this.dialog.open(MotivoDialogComponent, {
+      width: '600px',
+      height: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.infractionForm.get('step3')?.get('motivoDeMulta')?.setValue(result.motivo);
+        this.infractionForm.get('step3')?.get('articuloFraccion')?.setValue(result.articulo);
+        this.selectedMotivo = result;
+      }
+    });
+  }
+
+
+
   onMotivoChange(): void {
     const motivoDeMultaId = parseInt(this.infractionForm.get('step3')?.get('motivoDeMulta')?.value, 10);
     this.selectedMotivo = this.motivosInfraccion.find(motivo => motivo.id_motivo === motivoDeMultaId);
@@ -109,16 +154,28 @@ export class InfractionFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.infractionForm.valid) {
+      const step1 = this.infractionForm.get('step1')?.value || {};
       const step2 = this.infractionForm.get('step2')?.value || {};
+      const step3 = this.infractionForm.get('step3')?.value || {};
       const year = parseInt(step2.year, 10) || null;
 
+      // Convertir policiaId a un valor numérico
+      const policiaId = parseInt(this.policiaId, 10) || null;
+
+      // Asegurarse de que el país esté definido
+      const pais = step1.pais || 'México';
+
       const infractionData = {
-        ...this.infractionForm.get('step1')?.value,
+        policiaId,
+        ...step1,
+        pais,
         ...step2,
         year,
-        ...this.infractionForm.get('step3')?.value,
-        imagenes: this.infractionForm.get('step3')?.get('imagenes')?.value.split(',').map((link: string) => link.trim()).join(',')
+        ...step3,
+        imagenes: step3.imagenes.split(',').map((link: string) => link.trim()).join(',')
       };
+
+      console.log('Datos a enviar para registrar la infracción:', infractionData);
 
       this.infractionService.createInfraction(infractionData).subscribe({
         next: response => {
