@@ -7,7 +7,8 @@ import { ColorDialogComponent } from '../color-dialog/color-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MotivoDialogComponent } from '../motivo-dialog/motivo-dialog.component';
 import { LocationPickerDialogComponent } from '../location-picker-dialog/location-picker-dialog.component';
-
+import { FirebaseStorageService } from '../firebase-storage.service';
+import { UploadImageDialogComponent } from '../upload-image-dialog/upload-image-dialog.component';
 
 interface Year {
   value: string;
@@ -114,6 +115,18 @@ export class InfractionFormComponent implements OnInit {
     }
   }
 
+  openUploadImagesDialog(): void {
+    const dialogRef = this.dialog.open(UploadImageDialogComponent, {
+      width: '600px',
+      height: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.infractionForm.get('step3.imagenes')?.setValue(result);
+      }
+    });
+  }
 
 
   openLocationPicker(): void {
@@ -169,34 +182,31 @@ export class InfractionFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Verificar primero que el formulario esté completo y válido.
     if (this.infractionForm.valid) {
-      const step1 = this.infractionForm.get('step1')?.value || {};
-      const step2 = this.infractionForm.get('step2')?.value || {};
-      const step3 = this.infractionForm.get('step3')?.value || {};
-      const year = parseInt(step2.year, 10) || null;
+      const formData = this.infractionForm.getRawValue();
 
-      // Convertir policiaId a un valor numérico
-      const policiaId = parseInt(this.policiaId, 10) || null;
-
-      // Asegurarse de que el país esté definido
-      const pais = step1.pais || 'México';
-
+      // Procesar los datos del formulario antes de enviarlos
       const infractionData = {
-        policiaId,
-        ...step1,
-        pais,
-        ...step2,
-        year,
-        ...step3,
-        imagenes: step3.imagenes.split(',').map((link: string) => link.trim()).join(',')
+        policiaId: parseInt(formData.step1.policiaId, 10),
+        placas: formData.step1.placas,
+        estado: formData.step1.estado,
+        marca: formData.step2.marca,
+        modelo: formData.step2.modelo,
+        year: parseInt(formData.step2.year, 10),
+        color: formData.step2.color,
+        motivoDeMulta: formData.step3.motivoDeMulta,
+        articuloFraccion: formData.step3.articuloFraccion,
+        ubicacion: formData.step3.ubicacion,
+        nombreInfractor: formData.step3.nombreInfractor,
+        imagenes: formData.step3.imagenes
       };
 
-      console.log('Datos a enviar para registrar la infracción:', infractionData);
-
+      // Llamar al servicio para enviar los datos
       this.infractionService.createInfraction(infractionData).subscribe({
         next: response => {
           console.log('Infracción registrada:', response);
-          this.infractionForm.reset(); // Restablecer el formulario después del envío
+          this.infractionForm.reset();
         },
         error: error => {
           console.error('Error al registrar la infracción:', error);

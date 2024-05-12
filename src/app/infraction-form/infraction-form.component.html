@@ -141,7 +141,22 @@
                       </button>
                     </div>
                   </div>
-
+                  <div>
+                    <label for="imagenes" class="block text-sm font-medium text-gray-700">Imágenes (URLs separadas por comas)</label>
+                    <div class="flex items-center">
+                      <input
+                        id="imagenes"
+                        type="text"
+                        formControlName="imagenes"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        readonly
+                      />
+                      <button mat-icon-button color="accent" (click)="openUploadImagesDialog()" aria-label="Subir imágenes">
+                        <mat-icon>photo_camera</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
                   <div>
                     <label for="nombreInfractor" class="block text-sm font-medium text-gray-700">Nombre del Infractor</label>
@@ -154,28 +169,13 @@
                     />
                   </div>
 
-                  <div>
-                    <label for="imagenes" class="block text-sm font-medium text-gray-700">Imágenes (URLs separadas por comas)</label>
-                    <input
-                      id="imagenes"
-                      type="text"
-                      formControlName="imagenes"
-                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      placeholder="Ingresa URLs de imágenes separadas por comas"
-                    />
-                  </div>
-                </div>
+
                 <div class="flex justify-between pt-4">
                   <button mat-button matStepperPrevious class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-500">Anterior</button>
-                  <button type="submit" mat-button class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Registrar Infracción</button>
+                  <button mat-button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Registrar Infracción</button>
                 </div>
               </mat-step>
             </mat-horizontal-stepper>
-
-            <!-- Error general -->
-            <div *ngIf="formError" class="bg-red-100 text-red-600 mt-6 p-4 rounded-lg" role="alert">
-              {{ formError }}
-            </div>
           </form>
         </div>
       </div>

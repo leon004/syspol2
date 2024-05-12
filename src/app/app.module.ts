@@ -24,6 +24,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LocationPickerDialogComponent } from './location-picker-dialog/location-picker-dialog.component';
+// Import AngularFireModule
+import { AngularFireModule } from '@angular/fire/compat';
+
+// Import AngularFireStorageModule
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from '../enviroments/enviroment';
+import { UploadImageDialogComponent } from './upload-image-dialog/upload-image-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +40,8 @@ import { LocationPickerDialogComponent } from './location-picker-dialog/location
     InfractionFormComponent,
     LoginComponent,
     MotivoDialogComponent,
-    LocationPickerDialogComponent
+    LocationPickerDialogComponent,
+    UploadImageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +59,8 @@ import { LocationPickerDialogComponent } from './location-picker-dialog/location
     MatCardModule,
     MatDialogModule,
     MatListModule,
-    MatSelectModule,CommonModule
+    MatSelectModule,CommonModule, AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule
   ],
   providers: [
     provideClientHydration(),
