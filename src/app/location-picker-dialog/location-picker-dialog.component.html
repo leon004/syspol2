@@ -1,0 +1,13 @@
+<div class="container mx-auto px-4">
+  <!-- Botón para enviar ubicación, movido arriba y con estilo mejorado -->
+  <div class="text-right mt-4 mb-6">
+    <button (click)="registrarUbicacion()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow">
+      Registrar Ubicación
+    </button>
+  </div>
+
+  <!-- Mapa con margen automático y ancho del 80% para mejor proporción -->
+  <div class="mx-auto" style="width: 80%;">
+    <div id="map" style="height: 500px;" class="rounded-lg shadow-xl"></div>
+  </div>
+</div>

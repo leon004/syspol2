@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 import { ColorDialogComponent } from '../color-dialog/color-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MotivoDialogComponent } from '../motivo-dialog/motivo-dialog.component';
+import { LocationPickerDialogComponent } from '../location-picker-dialog/location-picker-dialog.component';
 
 
 interface Year {
@@ -114,6 +115,21 @@ export class InfractionFormComponent implements OnInit {
   }
 
 
+
+  openLocationPicker(): void {
+    const dialogRef = this.dialog.open(LocationPickerDialogComponent, {
+      width: '80%',
+      height: '80%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Usa el formato específico con el nombre de la calle, si está disponible
+        const formattedLocation = `Latitud: ${result.lat}, Longitud: ${result.lng}, Nombre de la calle: ${result.streetName || 'Calle no encontrada'}`;
+        this.infractionForm.get('step3')?.get('ubicacion')?.setValue(formattedLocation);
+      }
+    });
+  }
 
 
 

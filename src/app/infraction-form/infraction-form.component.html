@@ -127,14 +127,21 @@
 
                   <div>
                     <label for="ubicacion" class="block text-sm font-medium text-gray-700">Ubicación</label>
-                    <input
-                      id="ubicacion"
-                      type="text"
-                      formControlName="ubicacion"
-                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      placeholder="Ingresa la ubicación de la infracción"
-                    />
+                    <div class="flex items-center">
+                      <input
+                        id="ubicacion"
+                        type="text"
+                        formControlName="ubicacion"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Ingresa la ubicación de la infracción"
+                        readonly
+                      />
+                      <button mat-icon-button color="accent" (click)="openLocationPicker()" aria-label="Seleccionar ubicación">
+                        <mat-icon>place</mat-icon>
+                      </button>
+                    </div>
                   </div>
+
 
                   <div>
                     <label for="nombreInfractor" class="block text-sm font-medium text-gray-700">Nombre del Infractor</label>

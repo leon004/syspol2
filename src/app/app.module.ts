@@ -9,6 +9,7 @@ import { InfractionFormComponent } from './infraction-form/infraction-form.compo
 import { LoginComponent } from './login/login.component';
 import { MotivoDialogComponent } from './motivo-dialog/motivo-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 // Material Imports
 import { MatStepperModule } from '@angular/material/stepper';
@@ -22,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LocationPickerDialogComponent } from './location-picker-dialog/location-picker-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ColorDialogComponent,
     InfractionFormComponent,
     LoginComponent,
-    MotivoDialogComponent
+    MotivoDialogComponent,
+    LocationPickerDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatCardModule,
     MatDialogModule,
     MatListModule,
-    MatSelectModule,
+    MatSelectModule,CommonModule
   ],
   providers: [
     provideClientHydration(),
