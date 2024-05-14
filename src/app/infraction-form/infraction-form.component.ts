@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { InfractionService } from '../infraction.service';
@@ -7,7 +7,6 @@ import { ColorDialogComponent } from '../color-dialog/color-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MotivoDialogComponent } from '../motivo-dialog/motivo-dialog.component';
 import { LocationPickerDialogComponent } from '../location-picker-dialog/location-picker-dialog.component';
-import { FirebaseStorageService } from '../firebase-storage.service';
 import { UploadImageDialogComponent } from '../upload-image-dialog/upload-image-dialog.component';
 
 interface Year {
@@ -28,7 +27,7 @@ interface InfraccionMotivo {
   templateUrl: './infraction-form.component.html',
   styleUrls: ['./infraction-form.component.scss']
 })
-export class InfractionFormComponent implements OnInit {
+export class InfractionFormComponent implements OnInit, AfterViewInit {
   infractionForm: FormGroup;
   formError: string | null = null;
   marcas: any[] = [];
@@ -39,6 +38,10 @@ export class InfractionFormComponent implements OnInit {
   motivosInfraccion: InfraccionMotivo[] = [];
   selectedMotivo: InfraccionMotivo | undefined;
   images: string[] = [];
+  selectedLocation: { lat: number; lng: number; streetName?: string } | null = null;
+  map: any;
+
+  @ViewChild('map') mapElement!: ElementRef;
 
   colores = [
     { value: '#ff0000', name: 'Rojo' },
@@ -52,12 +55,10 @@ export class InfractionFormComponent implements OnInit {
     private fb: FormBuilder,
     private infractionService: InfractionService,
     private dataService: DataService,
-    public dialog: MatDialog,
-
+    public dialog: MatDialog
   ) {
     // Obtener el policiaId y el usuario desde localStorage
     this.policiaId = localStorage.getItem('policiaId') || '';
-    const usuario = localStorage.getItem('usuario') || '';
 
     // Configurar el formulario
     this.infractionForm = this.fb.group({
@@ -115,6 +116,24 @@ export class InfractionFormComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    // Iniciar el mapa solo si hay una ubicación seleccionada
+    if (this.selectedLocation) {
+      this.initMap();
+    }
+  }
+
+  private initMap(): void {
+    import('leaflet').then(L => {
+      this.map = L.map(this.mapElement.nativeElement).setView([this.selectedLocation!.lat, this.selectedLocation!.lng], 16);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }).addTo(this.map);
+      L.marker([this.selectedLocation!.lat, this.selectedLocation!.lng]).addTo(this.map)
+        .bindPopup('Ubicación seleccionada').openPopup();
+    });
+  }
+
   openUploadImagesDialog(): void {
     const dialogRef = this.dialog.open(UploadImageDialogComponent, {
       width: '600px',
@@ -123,11 +142,17 @@ export class InfractionFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.infractionForm.get('step3.imagenes')?.setValue(result);
+        const imageUrls = result.split(',');
+        this.images = this.images.concat(imageUrls);
+        this.infractionForm.get('step3.imagenes')?.setValue(this.images.join(','));
       }
     });
   }
 
+  removeImage(image: string): void {
+    this.images = this.images.filter(img => img !== image);
+    this.infractionForm.get('step3.imagenes')?.setValue(this.images.join(','));
+  }
 
   openLocationPicker(): void {
     const dialogRef = this.dialog.open(LocationPickerDialogComponent, {
@@ -137,14 +162,13 @@ export class InfractionFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Usa el formato específico con el nombre de la calle, si está disponible
+        this.selectedLocation = result;
         const formattedLocation = `Latitud: ${result.lat}, Longitud: ${result.lng}, Nombre de la calle: ${result.streetName || 'Calle no encontrada'}`;
         this.infractionForm.get('step3')?.get('ubicacion')?.setValue(formattedLocation);
+        this.initMap();  // Inicializar el mapa con la nueva ubicación seleccionada
       }
     });
   }
-
-
 
   openColorDialog(){
     const dialogRef = this.dialog.open(ColorDialogComponent);
@@ -155,6 +179,7 @@ export class InfractionFormComponent implements OnInit {
       }
     });
   }
+
   openMotivoDialog() {
     const dialogRef = this.dialog.open(MotivoDialogComponent, {
       width: '600px',
@@ -169,8 +194,6 @@ export class InfractionFormComponent implements OnInit {
       }
     });
   }
-
-
 
   onMotivoChange(): void {
     const motivoDeMultaId = parseInt(this.infractionForm.get('step3')?.get('motivoDeMulta')?.value, 10);

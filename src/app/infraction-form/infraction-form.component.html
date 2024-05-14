@@ -141,8 +141,17 @@
                       </button>
                     </div>
                   </div>
+
+                  <div *ngIf="selectedLocation" class="mt-4 p-4 border border-gray-300 rounded-md shadow-sm">
+                    <h3 class="text-lg font-semibold mb-2">Ubicación Seleccionada:</h3>
+                    <p>Latitud: {{ selectedLocation.lat }}</p>
+                    <p>Longitud: {{ selectedLocation.lng }}</p>
+                    <p>Nombre de la calle: {{ selectedLocation.streetName }}</p>
+                    <div id="map" style="height: 300px;" class="rounded-lg shadow-md mt-4"></div>
+                  </div>
+
                   <div>
-                    <label for="imagenes" class="block text-sm font-medium text-gray-700">Imágenes (URLs separadas por comas)</label>
+                    <label for="imagenes" class="block text-sm font-medium text-gray-700">Imágenes</label>
                     <div class="flex items-center">
                       <input
                         id="imagenes"
@@ -150,13 +159,20 @@
                         formControlName="imagenes"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         readonly
+                        hidden
                       />
                       <button mat-icon-button color="accent" (click)="openUploadImagesDialog()" aria-label="Subir imágenes">
                         <mat-icon>photo_camera</mat-icon>
                       </button>
                     </div>
                   </div>
-                </div>
+
+                  <div *ngIf="images.length > 0" class="grid grid-cols-3 gap-4 mt-4">
+                    <div *ngFor="let image of images" class="relative">
+                      <img [src]="image" class="w-full h-auto rounded-lg shadow-md">
+                      <mat-icon class="absolute top-1 right-1 cursor-pointer text-red-600" (click)="removeImage(image)">cancel</mat-icon>
+                    </div>
+                  </div>
 
                   <div>
                     <label for="nombreInfractor" class="block text-sm font-medium text-gray-700">Nombre del Infractor</label>
@@ -168,8 +184,7 @@
                       placeholder="Ingresa el nombre del infractor"
                     />
                   </div>
-
-
+                </div>
                 <div class="flex justify-between pt-4">
                   <button mat-button matStepperPrevious class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-500">Anterior</button>
                   <button mat-button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Registrar Infracción</button>
