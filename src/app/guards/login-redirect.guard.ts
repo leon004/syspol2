@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class LoginRedirectGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(
@@ -14,10 +14,9 @@ export class AuthGuard implements CanActivate {
 
     const token = localStorage.getItem('token');
     if (token) {
-      return true;  // Usuario con sesión, permite acceso
-    } else {
-      this.router.navigate(['/login']);  // No hay sesión, redirige a login
+      this.router.navigate(['/home']);
       return false;
     }
+    return true;
   }
 }

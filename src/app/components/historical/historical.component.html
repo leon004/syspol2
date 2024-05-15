@@ -1,1 +1,25 @@
-<p>historical works!</p>
+<div class="container mx-auto mt-8 px-4">
+  <h2 class="text-2xl font-semibold mb-6">Historial de Infracciones</h2>
+  <div class="mb-6">
+    <input
+      type="text"
+      placeholder="Buscar..."
+      [(ngModel)]="searchText"
+      (input)="onSearchTextChange()"
+      class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    />
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let entry of filteredData" class="bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-lg font-bold mb-2">Folio: {{ entry.folio }}</h3>
+      <p class="flex items-center text-gray-700"><mat-icon>description</mat-icon><span class="ml-2">{{ entry.motivoDeMulta }}</span></p>
+      <p class="flex items-center text-gray-700"><mat-icon>directions_car</mat-icon><span class="ml-2">{{ entry.placas }}</span></p>
+      <p class="flex items-center text-gray-700"><mat-icon>build</mat-icon><span class="ml-2">{{ entry.marca }}</span></p>
+      <p class="flex items-center text-gray-700"><mat-icon>build</mat-icon><span class="ml-2">{{ entry.modelo }}</span></p>
+      <p class="flex items-center text-gray-700"><mat-icon>place</mat-icon><span class="ml-2">{{ entry.ubicacion }}</span></p>
+      <p class="flex items-center text-gray-700"><mat-icon>calendar_today</mat-icon><span class="ml-2">{{ entry.fecha | date }}</span></p>
+      <p class="flex items-center text-gray-700"><mat-icon>access_time</mat-icon><span class="ml-2">{{ entry.hora | date:'shortTime' }}</span></p>
+    </div>
+  </div>
+  <app-bottom-nav></app-bottom-nav>
+</div>

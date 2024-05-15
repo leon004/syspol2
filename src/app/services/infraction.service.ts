@@ -66,4 +66,11 @@ export class InfractionService {
       headers: this.createAuthorizationHeader()
     });
   }
+  // Función para obtener infracciones por ID del policía
+  getInfractionsByPoliciaId(policiaId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/policia/${policiaId}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
 }
