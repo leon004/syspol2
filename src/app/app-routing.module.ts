@@ -10,6 +10,7 @@ import { JuezComponent } from './components/juez/juez.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { LoginRedirectGuard } from './guards/login-redirect.guard';
+import { AdminComponent } from './components/admin/admin.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginRedirectGuard] },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   {path: 'juez', component: JuezComponent, canActivate: [AuthGuard]},
   { path: 'car-detail/:id', component: CarDetailComponent, canActivate: [AuthGuard] },
+  {path: 'admin', component: AdminComponent},
   { path: '**', redirectTo: 'login', pathMatch: 'full' } // Redirigir cualquier ruta no reconocida a login
 ];
 

@@ -38,6 +38,7 @@ import { HistoricalComponent } from './components/historical/historical.componen
 import { PoliceHomeComponent } from './components/police-home/police-home.component';
 import { JuezComponent } from './components/juez/juez.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HistoricalComponent,
     PoliceHomeComponent,
     JuezComponent,
-    ProfileComponent
+    ProfileComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
