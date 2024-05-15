@@ -24,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LocationPickerDialogComponent } from './shared/location-picker-dialog/location-picker-dialog.component';
+import { MatRadioModule } from '@angular/material/radio';
 // Import AngularFireModule
 import { AngularFireModule } from '@angular/fire/compat';
 
@@ -70,6 +71,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     MatIconModule,
     MatCardModule,
     MatDialogModule,
+    MatRadioModule,
     MatListModule,
     MatSelectModule,CommonModule, AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule

@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MotivoDialogComponent } from '../../shared/motivo-dialog/motivo-dialog.component';
 import { LocationPickerDialogComponent } from '../../shared/location-picker-dialog/location-picker-dialog.component';
 import { UploadImageDialogComponent } from '../../shared/upload-image-dialog/upload-image-dialog.component';
+import { SharedService } from '../../services/shared.service'; // Importa el servicio compartido
+import { Router } from '@angular/router'; // Importa el Router
 
 interface Year {
   value: string;
@@ -55,7 +57,9 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private infractionService: InfractionService,
     private dataService: DataService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private sharedService: SharedService, // Inyecta el servicio compartido
+    private router: Router // Inyecta el Router
   ) {
     // Obtener el policiaId y el usuario desde localStorage
     this.policiaId = localStorage.getItem('policiaId') || '';
@@ -98,6 +102,11 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
 
     this.dataService.getInfraccionMotivos().subscribe(motivos => {
       this.motivosInfraccion = motivos;
+    });
+
+    // Obtener el valor de las placas o VIN desde el servicio compartido
+    this.sharedService.currentPlates.subscribe(plates => {
+      this.infractionForm.get('step1.placas')?.setValue(plates);
     });
   }
 
@@ -199,7 +208,6 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
     const motivoDeMultaId = parseInt(this.infractionForm.get('step3')?.get('motivoDeMulta')?.value, 10);
     this.selectedMotivo = this.motivosInfraccion.find(motivo => motivo.id_motivo === motivoDeMultaId);
     if (this.selectedMotivo) {
-      // Asignar el valor del artículo al control
       this.infractionForm.get('step3')?.get('articuloFraccion')?.setValue(this.selectedMotivo.articulo);
     }
   }
@@ -230,6 +238,7 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
         next: response => {
           console.log('Infracción registrada:', response);
           this.infractionForm.reset();
+          this.router.navigate(['/home']); // Redirige al home después del registro exitoso
         },
         error: error => {
           console.error('Error al registrar la infracción:', error);

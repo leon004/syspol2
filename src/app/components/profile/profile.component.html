@@ -1,1 +1,21 @@
-<p>profile works!</p>
+<mat-nav-list>
+  <a mat-list-item>
+    <span>Configurar impresora</span>
+  </a>
+  <h3 mat-subheader>Acerca de</h3>
+  <a mat-list-item>
+    <span>Versión</span>
+    <span class="version-number">1.0.0</span>
+  </a>
+  <h3 mat-subheader>Información</h3>
+  <a mat-list-item>
+    <span>Política de privacidad</span>
+  </a>
+  <a mat-list-item>
+    <span>Términos y condiciones de uso</span>
+  </a>
+  <a mat-list-item (click)="logout()">
+    <span>Cerrar sesión</span>
+  </a>
+</mat-nav-list>
+<app-bottom-nav></app-bottom-nav>

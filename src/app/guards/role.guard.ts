@@ -12,14 +12,14 @@ export class RoleGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const requiredRoles = next.data['roles'] as Array<string>;  // Roles requeridos para la ruta
-    const userRole = localStorage.getItem('rol');              // Obtiene el rol del usuario del localStorage
+    const requiredRoles = next.data['roles'] as Array<string>;
+    const userRole = localStorage.getItem('rol');
 
     if (userRole && requiredRoles.includes(userRole)) {
-      return true;  // Si el rol del usuario está en la lista de roles permitidos, acceso concedido
+      return true;
     } else {
-      this.router.navigate(['/no-access']);  // Redirige a una página de "Acceso Denegado"
-      return false;  // Acceso denegado
+      this.router.navigate(['/no-access']);
+      return false;
     }
   }
 }

@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
-    // Inicializa el formulario con validadores para los campos requeridos
     this.loginForm = this.fb.group({
       usuario: ['', Validators.required],
       password: ['', Validators.required]
@@ -26,37 +25,34 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Método ejecutado al enviar el formulario de inicio de sesión
   onSubmit(): void {
-    // Limpia mensajes de error anteriores
     this.loginError = null;
 
-    // Verifica si el formulario es válido
     if (this.loginForm.valid) {
-      // Obtén las credenciales del formulario
       const credentials = this.loginForm.value;
 
-      // Llama al servicio de autenticación con las credenciales del usuario
       this.authService.login(credentials).subscribe({
         next: response => {
           console.log('Usuario autenticado:', response);
 
-          // Guarda el token en localStorage para futuras solicitudes
-          localStorage.setItem('userToken', response.token);
-          localStorage.setItem('usuario', response.usuario);
-          localStorage.setItem('policiaId', response.user.id);
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('usuario', response.user.usuario);
+          localStorage.setItem('policiaId', response.user.id.toString());
+          localStorage.setItem('rol', response.user.rol); // Guardar el rol del usuario
 
-          // Redirige a la página de formulario de infracciones tras el login exitoso
-          this.router.navigate(['/infraction']);
+          // Redirige según el rol
+          if (response.user.rol === 'Juez') {
+            this.router.navigate(['/juez']);
+          } else {
+            this.router.navigate(['/home']);
+          }
         },
         error: error => {
           console.error('Error al autenticar:', error);
-          // Muestra un mensaje de error en el componente si la autenticación falla
           this.loginError = 'Credenciales incorrectas o error del servidor. Inténtalo de nuevo.';
         }
       });
     } else {
-      // Si el formulario no es válido, muestra un mensaje de error
       this.loginError = 'Por favor, completa todos los campos requeridos.';
     }
   }

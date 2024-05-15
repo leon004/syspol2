@@ -1,1 +1,37 @@
-<p>police-home works!</p>
+<div class="home-container">
+  <mat-card class="search-card mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>Ingresa las placas del vehículo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="vehicleForm" class="max-w-sm mx-auto">
+        <label for="simple-search" class="sr-only">Search</label>
+        <div class="relative w-full py-4">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-900" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z"/>
+                <circle cx="7" cy="17" r="2" />
+                <circle cx="17" cy="17" r="2" />
+                <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
+              </svg>
+            </div>
+            <input formControlName="inputField" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5" placeholder="{{ inputLabel }}" required />
+        </div>
+        <div class="radio-buttons">
+          <mat-radio-group aria-label="Selecciona una opción" formControlName="inputType" (change)="onInputChange()">
+            <mat-radio-button value="placas" checked>Placas</mat-radio-button>
+            <mat-radio-button value="vin">VIN</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="actions">
+          <button class="custom-button" (click)="search()" type="button" [disabled]="!vehicleForm.valid">Buscar</button>
+          <button class="custom-button secondary" type="button" (click)="cancel()">Cancelar</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="pt-6">
+  <app-bottom-nav></app-bottom-nav>
+</div>
+

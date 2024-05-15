@@ -1,0 +1,105 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 16px;
+  background-color: #f8f8f8; /* Puedes cambiar el color de fondo si es necesario */
+}
+
+.logo {
+  height: 50px; /* Ajusta esto según el tamaño de tu logo */
+  margin-right: 16px;
+}
+
+.header-title {
+  font-size: 24px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+/* Estilos existentes... */
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.search-card {
+  width: 100%;
+  max-width: 600px; /* Adjust the max-width as per your design requirement */
+}
+
+.mat-card-title {
+  font-size: 24px;
+  text-align: center;
+}
+
+.radio-buttons {
+  display: flex;
+  color: #011D4D;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.mat-radio-button {
+  margin-right: 16px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 20px;
+}
+
+.search-button {
+  background-color: #011D4D;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.cancel-button {
+  color: #011D4D;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .radio-buttons {
+    flex-direction: column;
+  }
+
+  .mat-radio-button {
+    margin: 8px 0;
+  }
+}
+/* CSS */
+.custom-button {
+  background-color: #011D4D; /* El color de fondo azul */
+  color: white; /* El texto en color blanco */
+  padding: 10px 20px; /* Espaciado interno para hacer el botón más grande */
+  border: none; /* No mostrar bordes */
+  border-radius: 15px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de la fuente */
+  cursor: pointer; /* Cursor en forma de mano al pasar el mouse por encima */
+  outline: none; /* No mostrar el contorno al hacer foco en el botón */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+  margin: 5px; /* Margen alrededor de los botones */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Transición suave para el fondo y la sombra */
+}
+
+.custom-button:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el mouse por encima */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el mouse por encima */
+}
+
+.custom-button:active {
+  background-color: #0041a8; /* Color de fondo aún más oscuro al hacer clic */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra menos pronunciada al hacer clic */
+}
+input[type="text"] {
+  text-transform: uppercase;
+}

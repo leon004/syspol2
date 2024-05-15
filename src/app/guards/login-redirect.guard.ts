@@ -12,11 +12,15 @@ export class LoginRedirectGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.router.navigate(['/home']);
-      return false;
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.router.navigate(['/home']);
+        return false;
+      }
+      return true;
+    } else {
+      return true;  // Permite acceso a la página de login si localStorage no está disponible
     }
-    return true;
   }
 }
