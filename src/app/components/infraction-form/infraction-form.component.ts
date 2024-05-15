@@ -1,13 +1,13 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-import { InfractionService } from '../infraction.service';
-import { DataService } from '../data.service';
-import { ColorDialogComponent } from '../color-dialog/color-dialog.component';
+import { InfractionService } from '../../services/infraction.service';
+import { DataService } from '../../services/data.service';
+import { ColorDialogComponent } from '../../shared/color-dialog/color-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MotivoDialogComponent } from '../motivo-dialog/motivo-dialog.component';
-import { LocationPickerDialogComponent } from '../location-picker-dialog/location-picker-dialog.component';
-import { UploadImageDialogComponent } from '../upload-image-dialog/upload-image-dialog.component';
+import { MotivoDialogComponent } from '../../shared/motivo-dialog/motivo-dialog.component';
+import { LocationPickerDialogComponent } from '../../shared/location-picker-dialog/location-picker-dialog.component';
+import { UploadImageDialogComponent } from '../../shared/upload-image-dialog/upload-image-dialog.component';
 
 interface Year {
   value: string;

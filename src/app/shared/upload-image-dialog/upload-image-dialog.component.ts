@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FirebaseStorageService } from '../firebase-storage.service';
+import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
   selector: 'app-upload-image-dialog',

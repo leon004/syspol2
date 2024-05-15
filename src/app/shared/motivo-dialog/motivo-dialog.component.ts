@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DataService } from '../data.service';
-import { InfraccionMotivo } from '../models';
+import { DataService } from '../../services/data.service';
+import { InfraccionMotivo } from '../../models';
 
 @Component({
   selector: 'app-motivo-dialog',
