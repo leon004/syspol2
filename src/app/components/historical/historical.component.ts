@@ -11,7 +11,7 @@ export class HistoricalComponent implements OnInit {
   filteredData: any[] = [];
   searchText: string = '';
 
-  constructor(private infractionService: InfractionService) { }
+  constructor(private infractionService: InfractionService) {}
 
   ngOnInit(): void {
     this.loadHistoricalData();
@@ -25,8 +25,17 @@ export class HistoricalComponent implements OnInit {
           this.historicalData = data;
           this.filteredData = data;
         },
-        error => console.error('Error loading historical data', error)
+        error => {
+          console.error('Error loading historical data', error);
+          if (error.status === 403) {
+            alert('Forbidden: You do not have the necessary permissions to access this resource.');
+          } else {
+            alert(`Error: ${error.message}`);
+          }
+        }
       );
+    } else {
+      console.error('No policiaId found in localStorage');
     }
   }
 
