@@ -1,50 +1,92 @@
 <div class="container mx-auto mt-8 px-4">
-  <h2 class="text-2xl font-semibold mb-6">Administración</h2>
+  <h2 class="text-2xl font-semibold mb-6 text-center">Administración</h2>
 
   <!-- Usuarios -->
-  <div class="mb-6">
+  <div class="mb-10">
     <h3 class="text-xl font-semibold mb-4">Usuarios</h3>
-    <button (click)="selectedUser = {}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">Agregar Usuario</button>
-    <div *ngIf="selectedUser" class="mb-4">
-      <h4 class="text-lg font-semibold">{{ selectedUser.id ? 'Editar Usuario' : 'Agregar Usuario' }}</h4>
-      <input [(ngModel)]="selectedUser.nombre" placeholder="Nombre" class="border p-2 mb-2 w-full" />
-      <input [(ngModel)]="selectedUser.apellidoPaterno" placeholder="Apellido Paterno" class="border p-2 mb-2 w-full" />
-      <input [(ngModel)]="selectedUser.apellidoMaterno" placeholder="Apellido Materno" class="border p-2 mb-2 w-full" />
-      <input [(ngModel)]="selectedUser.usuario" placeholder="Usuario" class="border p-2 mb-2 w-full" />
-      <input [(ngModel)]="selectedUser.password" placeholder="Contraseña" type="password" class="border p-2 mb-2 w-full" />
-      <select [(ngModel)]="selectedUser.rol" class="border p-2 mb-2 w-full">
-        <option value="Admin">Admin</option>
-        <option value="Juez">Juez</option>
-        <option value="Policia">Policía</option>
-      </select>
-      <button (click)="saveUser()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{ selectedUser.id ? 'Actualizar' : 'Guardar' }}</button>
-      <button (click)="selectedUser = null" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+    <button (click)="selectedUser = {}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">
+      Agregar Usuario
+    </button>
+
+    <div *ngIf="selectedUser" class="mb-6 border p-4 rounded-lg shadow-md">
+      <h4 class="text-lg font-semibold mb-4">{{ selectedUser.id ? 'Editar Usuario' : 'Agregar Usuario' }}</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <input [(ngModel)]="selectedUser.nombre" placeholder="Nombre" class="border p-2 w-full rounded" />
+        <input [(ngModel)]="selectedUser.apellidoPaterno" placeholder="Apellido Paterno" class="border p-2 w-full rounded" />
+        <input [(ngModel)]="selectedUser.apellidoMaterno" placeholder="Apellido Materno" class="border p-2 w-full rounded" />
+        <input [(ngModel)]="selectedUser.usuario" placeholder="Usuario" class="border p-2 w-full rounded" />
+        <input [(ngModel)]="selectedUser.password" placeholder="Contraseña" type="password" class="border p-2 w-full rounded" />
+        <select [(ngModel)]="selectedUser.rol" class="border p-2 w-full rounded">
+          <option value="Admin">Admin</option>
+          <option value="Juez">Juez</option>
+          <option value="Policia">Policía</option>
+        </select>
+      </div>
+      <div class="flex justify-end mt-4">
+        <button (click)="saveUser()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+          {{ selectedUser.id ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <button (click)="selectedUser = null" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+          Cancelar
+        </button>
+      </div>
     </div>
+
     <div *ngFor="let user of users" class="bg-white p-4 rounded-lg shadow-md mb-4">
-      <h4 class="font-bold">{{ user.nombre }} {{ user.apellidoPaterno }} {{ user.apellidoMaterno }}</h4>
-      <p>Usuario: {{ user.usuario }}</p>
-      <p>Rol: {{ user.rol }}</p>
-      <button (click)="selectUser(user)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
-      <button (click)="deleteUser(user.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+      <div class="flex justify-between items-center">
+        <div>
+          <h4 class="font-bold">{{ user.nombre }} {{ user.apellidoPaterno }} {{ user.apellidoMaterno }}</h4>
+          <p>Usuario: {{ user.usuario }}</p>
+          <p>Rol: {{ user.rol }}</p>
+        </div>
+        <div class="flex space-x-2">
+          <button (click)="selectUser(user)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Editar
+          </button>
+          <button (click)="deleteUser(user.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Eliminar
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Infracciones -->
   <div>
     <h3 class="text-xl font-semibold mb-4">Infracciones</h3>
-    <div *ngFor="let infraction of infractions" class="bg-white p-4 rounded-lg shadow-md mb-4">
-      <h4 class="font-bold">Folio: {{ infraction.folio }}</h4>
-      <p>Placas: {{ infraction.placas }}</p>
-      <p>Motivo: {{ infraction.motivoDeMulta }}</p>
-      <button (click)="selectInfraction(infraction)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
-      <button (click)="deleteInfraction(infraction.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+
+    <div *ngIf="selectedInfraction" class="mb-6 border p-4 rounded-lg shadow-md">
+      <h4 class="text-lg font-semibold mb-4">{{ selectedInfraction.id ? 'Editar Infracción' : 'Agregar Infracción' }}</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <input [(ngModel)]="selectedInfraction.placas" placeholder="Placas" class="border p-2 w-full rounded" />
+        <input [(ngModel)]="selectedInfraction.motivoDeMulta" placeholder="Motivo de Multa" class="border p-2 w-full rounded" />
+      </div>
+      <div class="flex justify-end mt-4">
+        <button (click)="saveInfraction()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+          {{ selectedInfraction.id ? 'Actualizar' : 'Guardar' }}
+        </button>
+        <button (click)="selectedInfraction = null" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+          Cancelar
+        </button>
+      </div>
     </div>
-    <div *ngIf="selectedInfraction" class="mb-4">
-      <h4 class="text-lg font-semibold">{{ selectedInfraction.id ? 'Editar Infracción' : 'Agregar Infracción' }}</h4>
-      <input [(ngModel)]="selectedInfraction.placas" placeholder="Placas" class="border p-2 mb-2 w-full" />
-      <input [(ngModel)]="selectedInfraction.motivoDeMulta" placeholder="Motivo de Multa" class="border p-2 mb-2 w-full" />
-      <button (click)="saveInfraction()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{ selectedInfraction.id ? 'Actualizar' : 'Guardar' }}</button>
-      <button (click)="selectedInfraction = null" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+
+    <div *ngFor="let infraction of infractions" class="bg-white p-4 rounded-lg shadow-md mb-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <h4 class="font-bold">Folio: {{ infraction.folio }}</h4>
+          <p>Placas: {{ infraction.placas }}</p>
+          <p>Motivo: {{ infraction.motivoDeMulta }}</p>
+        </div>
+        <div class="flex space-x-2">
+          <button (click)="selectInfraction(infraction)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Editar
+          </button>
+          <button (click)="deleteInfraction(infraction.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Eliminar
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
