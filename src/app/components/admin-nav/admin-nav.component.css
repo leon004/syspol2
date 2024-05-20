@@ -1,0 +1,12 @@
+nav {
+  background-color: #1f2937; /* Tailwind bg-gray-800 */
+}
+
+.mat-menu-item {
+  display: flex;
+  align-items: center;
+}
+
+.mat-menu-item mat-icon {
+  margin-right: 8px;
+}

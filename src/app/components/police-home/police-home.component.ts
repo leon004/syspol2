@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConsultaComponent } from '../consulta/consulta.component';
 
 @Component({
   selector: 'app-police-home',
@@ -12,7 +14,12 @@ export class PoliceHomeComponent {
   vehicleForm: FormGroup;
   inputLabel: string = "Placas";
 
-  constructor(private fb: FormBuilder, private router: Router, private sharedService: SharedService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private sharedService: SharedService,
+    private dialog: MatDialog
+  ) {
     this.vehicleForm = this.fb.group({
       inputField: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]{3}-?\d{3}-?[a-zA-Z]$/)]],
       inputType: ['placas']
@@ -35,7 +42,17 @@ export class PoliceHomeComponent {
     if (this.vehicleForm.valid) {
       const platesOrVin = this.vehicleForm.get('inputField')!.value.replace(/-/g, '').toUpperCase();
       this.sharedService.updatePlates(platesOrVin);
-      this.router.navigate(['/infraction']);
+
+      // Abrir el diálogo de consulta
+      const dialogRef = this.dialog.open(ConsultaComponent, {
+        data: { platesOrVin }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.router.navigate(['/infraction']);
+        }
+      });
     }
   }
 

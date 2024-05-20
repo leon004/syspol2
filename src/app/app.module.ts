@@ -10,7 +10,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { MotivoDialogComponent } from './shared/motivo-dialog/motivo-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-
 // Material Imports
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
@@ -26,6 +25,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LocationPickerDialogComponent } from './shared/location-picker-dialog/location-picker-dialog.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialog } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Import AngularFireModule
 import { AngularFireModule } from '@angular/fire/compat';
@@ -45,6 +45,8 @@ import { AccessDeniedComponent } from './components/access-denied/access-denied.
 import { AccessDeniedAdminComponent } from './components/access-denied-admin/access-denied-admin.component';
 import { AccessDeniedJuezComponent } from './components/access-denied-juez/access-denied-juez.component';
 import { AccessDeniedPoliciaComponent } from './components/access-denied-policia/access-denied-policia.component';
+import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
+import { ConsultaComponent } from './components/consulta/consulta.component';
 
 
 @NgModule({
@@ -66,13 +68,16 @@ import { AccessDeniedPoliciaComponent } from './components/access-denied-policia
     AccessDeniedComponent,
     AccessDeniedAdminComponent,
     AccessDeniedJuezComponent,
-    AccessDeniedPoliciaComponent
+    AccessDeniedPoliciaComponent,
+    AdminNavComponent,
+    ConsultaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    MatMenuModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatStepperModule,

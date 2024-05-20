@@ -219,6 +219,9 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  goBackToHome() {
+    this.router.navigate(['/home']);
+  }
 
   onMotivoChange(): void {
     const motivoDeMultaId = parseInt(this.infractionForm.get('step3')?.get('motivoDeMulta')?.value, 10);

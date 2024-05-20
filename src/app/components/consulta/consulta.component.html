@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Infracciones Encontradas a estas placas</h2>
+<mat-dialog-content>
+  <div class="flex flex-wrap justify-center items-stretch bg-gray-100 pb-8 mt-6 gap-6">
+    <div
+      *ngFor="let infraction of filteredInfractions"
+      class="bg-white flex max-w-lg rounded-md overflow-hidden shadow-lg cursor-pointer transition-transform transform hover:scale-105"
+    >
+      <ng-container *ngIf="infraction.imagenes; else noImage">
+        <img
+          class="w-1/3 object-cover"
+          [src]="infraction.imagenes"
+          alt="Imagen del vehículo"
+        />
+      </ng-container>
+      <ng-template #noImage></ng-template>
+      <div class="w-full sm:w-2/3 px-4 py-2">
+        <div class="font-bold text-lg mb-2">{{ infraction.placas }}</div>
+        <p class="text-gray-700 text-sm">
+          <strong>Fecha:</strong> {{ infraction.fecha | date: 'dd MMM yyyy hh:mm a' }}
+        </p>
+        <p class="text-gray-700 text-sm">
+          <strong>Modelo:</strong> {{ infraction.marca }} {{ infraction.modelo }}
+        </p>
+        <p class="text-gray-700 text-sm">
+          <strong>Folio:</strong> {{ infraction.folio }}
+        </p>
+        <p class="text-gray-700 text-sm">
+          <strong>Motivo:</strong> {{ infraction.motivoDeMulta }}
+        </p>
+        <div class="flex flex-wrap mt-2">
+          <span
+            *ngFor="let tag of infraction.tags"
+            class="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+          >
+            {{ tag }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="goToInfractionForm()">Crear Infracción</button>
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</mat-dialog-actions>

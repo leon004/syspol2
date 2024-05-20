@@ -82,4 +82,11 @@ export class InfractionService {
       headers: this.createAuthorizationHeader()
     });
   }
+
+  getInfractionsByPlateOrVin(plateOrVin: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/search`, {
+      headers: this.createAuthorizationHeader(),
+      params: { plateOrVin }
+    });
+  }
 }

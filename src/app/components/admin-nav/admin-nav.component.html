@@ -1,0 +1,30 @@
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a routerLink="/home">
+      <img src="../assets/images/logo.png" alt="Logo" class="h-16">
+    </a>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon class="text-white">menu</mat-icon>
+    </button>
+  </div>
+</nav>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/profile">
+    <mat-icon>account_circle</mat-icon>
+    <span>Perfil</span>
+  </button>
+  <button *ngIf="userRole === 'Admin' || userRole === 'Policia'" mat-menu-item routerLink="/home">
+    <mat-icon>home</mat-icon>
+    <span>Inicio</span>
+  </button>
+
+  <button *ngIf="userRole === 'Admin' || userRole === 'Policia'" mat-menu-item routerLink="/historical">
+    <mat-icon>history</mat-icon>
+    <span>Historial</span>
+  </button>
+  <button *ngIf="userRole === 'Admin' || userRole === 'Juez'" mat-menu-item routerLink="/juez">
+    <mat-icon>gavel</mat-icon>
+    <span>Juez</span>
+  </button>
+</mat-menu>
