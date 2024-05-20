@@ -25,6 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LocationPickerDialogComponent } from './shared/location-picker-dialog/location-picker-dialog.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDialog } from '@angular/material/dialog';
+
 // Import AngularFireModule
 import { AngularFireModule } from '@angular/fire/compat';
 
@@ -39,6 +41,10 @@ import { PoliceHomeComponent } from './components/police-home/police-home.compon
 import { JuezComponent } from './components/juez/juez.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
+import { AccessDeniedAdminComponent } from './components/access-denied-admin/access-denied-admin.component';
+import { AccessDeniedJuezComponent } from './components/access-denied-juez/access-denied-juez.component';
+import { AccessDeniedPoliciaComponent } from './components/access-denied-policia/access-denied-policia.component';
 
 
 @NgModule({
@@ -56,7 +62,11 @@ import { AdminComponent } from './components/admin/admin.component';
     PoliceHomeComponent,
     JuezComponent,
     ProfileComponent,
-    AdminComponent
+    AdminComponent,
+    AccessDeniedComponent,
+    AccessDeniedAdminComponent,
+    AccessDeniedJuezComponent,
+    AccessDeniedPoliciaComponent
   ],
   imports: [
     BrowserModule,

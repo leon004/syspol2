@@ -3,14 +3,19 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { DataService } from '../../services/data.service';
 import { InfraccionMotivo } from '../../models';
 
+interface InfraccionMotivoExtendido extends InfraccionMotivo {
+  selected: boolean;
+}
+
 @Component({
   selector: 'app-motivo-dialog',
   templateUrl: './motivo-dialog.component.html',
   styleUrls: ['./motivo-dialog.component.scss']
 })
 export class MotivoDialogComponent implements OnInit {
-  motivosInfraccion: InfraccionMotivo[] = [];
-  filteredMotivosInfraccion: InfraccionMotivo[] = [];
+  motivosInfraccion: InfraccionMotivoExtendido[] = [];
+  filteredMotivosInfraccion: InfraccionMotivoExtendido[] = [];
+  private selectedMotivosState: { [key: number]: boolean } = {};
 
   constructor(
     public dialogRef: MatDialogRef<MotivoDialogComponent>,
@@ -19,8 +24,11 @@ export class MotivoDialogComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.getInfraccionMotivos().subscribe(motivos => {
-      this.motivosInfraccion = motivos;
-      this.filteredMotivosInfraccion = motivos;
+      this.motivosInfraccion = motivos.map(motivo => ({
+        ...motivo,
+        selected: this.selectedMotivosState[motivo.id_motivo] || false
+      }));
+      this.filteredMotivosInfraccion = this.motivosInfraccion;
     });
   }
 
@@ -37,10 +45,11 @@ export class MotivoDialogComponent implements OnInit {
     }
   }
 
-
-
-
-  selectMotivo(motivo: InfraccionMotivo) {
-    this.dialogRef.close(motivo);
+  confirmSelection() {
+    const selectedMotivos = this.motivosInfraccion.filter(motivo => motivo.selected);
+    selectedMotivos.forEach(motivo => this.selectedMotivosState[motivo.id_motivo] = motivo.selected);
+    const selectedMotivosString = selectedMotivos.map(motivo => motivo.motivo).join(', ');
+    const selectedArticulosString = selectedMotivos.map(motivo => motivo.articulo).join(', ');
+    this.dialogRef.close({ motivos: selectedMotivosString, articulos: selectedArticulosString });
   }
 }

@@ -1,13 +1,12 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 @Component({
   selector: 'app-upload-image-dialog',
   templateUrl: './upload-image-dialog.component.html',
   styleUrls: ['./upload-image-dialog.component.scss']
 })
-export class UploadImageDialogComponent implements AfterViewInit {
+export class UploadImageDialogComponent implements AfterViewInit, OnDestroy {
   files: File[] = [];
   previews: string[] = [];
   cameraOpen = false;
@@ -18,15 +17,24 @@ export class UploadImageDialogComponent implements AfterViewInit {
   @ViewChild('cameraPreview') cameraPreview!: ElementRef<HTMLVideoElement>;
   @ViewChild('photoCanvas') photoCanvas!: ElementRef<HTMLCanvasElement>;
 
-  constructor(
-    public dialogRef: MatDialogRef<UploadImageDialogComponent>,
-    private storageService: FirebaseStorageService
-  ) {}
+  constructor(public dialogRef: MatDialogRef<UploadImageDialogComponent>) {}
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.dialogRef.afterClosed().subscribe(() => {
+      this.closeCamera();
+    });
+  }
+
+  ngOnDestroy() {
+    this.closeCamera();
+  }
 
   onFileSelected(event: any): void {
     const selectedFiles = Array.from(event.target.files) as File[];
+    if (this.files.length + selectedFiles.length > 6) {
+      alert('No puedes seleccionar más de 6 imágenes.');
+      return;
+    }
 
     for (const file of selectedFiles) {
       if (file.type.startsWith('image/')) {
@@ -76,12 +84,16 @@ export class UploadImageDialogComponent implements AfterViewInit {
       canvas.toBlob(blob => {
         if (blob) {
           const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
-          this.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.previews.push(e.target.result);
-          };
-          reader.readAsDataURL(file);
+          if (this.files.length < 6) {
+            this.files.push(file);
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+              this.previews.push(e.target.result);
+            };
+            reader.readAsDataURL(file);
+          } else {
+            alert('No puedes seleccionar más de 6 imágenes.');
+          }
         }
       }, 'image/jpeg');
     }
@@ -100,12 +112,7 @@ export class UploadImageDialogComponent implements AfterViewInit {
     this.previews.splice(index, 1);
   }
 
-  async onUpload() {
-    const links = [];
-    for (const file of this.files) {
-      const link = await this.storageService.uploadFile(file);
-      links.push(link);
-    }
-    this.dialogRef.close(links.join(','));
+  onAccept(): void {
+    this.dialogRef.close(this.files);
   }
 }

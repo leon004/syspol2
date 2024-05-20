@@ -41,10 +41,21 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('rol', response.user.rol); // Guardar el rol del usuario
 
           // Redirige según el rol
-          if (response.user.rol === 'Juez') {
+          const userRole = response.user.rol.toLowerCase(); // Convertir a minúsculas para comparación
+          console.log('Rol del usuario:', userRole); // Mensaje de depuración
+
+          if (userRole === 'admin') {
+            console.log('Redirigiendo a /admin'); // Mensaje de depuración
+            this.router.navigate(['/admin']);
+          } else if (userRole === 'juez') {
+            console.log('Redirigiendo a /juez'); // Mensaje de depuración
             this.router.navigate(['/juez']);
-          } else {
+          } else if (userRole === 'policia') {
+            console.log('Redirigiendo a /home'); // Mensaje de depuración
             this.router.navigate(['/home']);
+          } else {
+            console.log('Rol desconocido, redirigiendo a /login');
+            this.router.navigate(['/login']);
           }
         },
         error: error => {

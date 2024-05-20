@@ -1,4 +1,4 @@
-<h2 class="text-2xl font-bold text-center text-gray-800 p-4">Seleccione un Motivo</h2>
+<h2 class="text-2xl font-bold text-center text-gray-800 p-4">Seleccione uno o más Motivos</h2>
 <mat-dialog-content class="p-4">
   <!-- Campo de búsqueda -->
   <div class="mb-4">
@@ -11,14 +11,20 @@
   <div class="my-2 border-t border-gray-200"></div> <!-- Línea antes de la lista -->
 
   <ul class="divide-y divide-gray-200">
-    <li *ngFor="let motivo of filteredMotivosInfraccion" (click)="selectMotivo(motivo)" class="p-2 hover:bg-gray-100 cursor-pointer">
-      <p class="text-gray-800 text-sm">{{ motivo.motivo }}</p>
-      <p class="text-gray-600 text-xs">Artículo/Fracción: {{ motivo.articulo }}</p>
+    <li *ngFor="let motivo of filteredMotivosInfraccion" class="p-2 hover:bg-gray-100 cursor-pointer flex justify-between items-center">
+      <div>
+        <p class="text-gray-800 text-sm">{{ motivo.motivo }}</p>
+        <p class="text-gray-600 text-xs">Artículo/Fracción: {{ motivo.articulo }}</p>
+      </div>
+      <input type="checkbox" [id]="'checkbox-' + motivo.id_motivo" [(ngModel)]="motivo.selected" class="ml-2">
     </li>
   </ul>
 </mat-dialog-content>
 <mat-dialog-actions class="justify-end p-4">
   <button mat-button mat-dialog-close class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
     Cancelar
+  </button>
+  <button mat-button (click)="confirmSelection()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+    Confirmar
   </button>
 </mat-dialog-actions>

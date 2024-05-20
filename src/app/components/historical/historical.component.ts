@@ -19,11 +19,13 @@ export class HistoricalComponent implements OnInit {
 
   loadHistoricalData(): void {
     const policiaId = localStorage.getItem('policiaId');
+    console.log('policiaId:', policiaId); // Añade este log para verificar policiaId
     if (policiaId) {
       this.infractionService.getInfractionsByPoliciaId(policiaId).subscribe(
         data => {
-          this.historicalData = data;
-          this.filteredData = data;
+          // Ordenar los datos por fecha, mostrando las más recientes primero
+          this.historicalData = data.sort((a: { fecha: string | number | Date; }, b: { fecha: string | number | Date; }) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+          this.filteredData = this.historicalData;
         },
         error => console.error('Error loading historical data', error)
       );

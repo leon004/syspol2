@@ -31,7 +31,10 @@ export class InfractionService {
 
   // Helper method to create headers including the token
   private createAuthorizationHeader(): HttpHeaders {
-    const token = localStorage.getItem('userToken'); // Assuming token is stored in localStorage
+    const token = localStorage.getItem('token'); // Asegúrate de que 'token' es el nombre correcto
+    if (!token) {
+      throw new Error('No token found in localStorage');
+    }
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -39,8 +42,7 @@ export class InfractionService {
   }
 
   // Función para crear una nueva infracción
-  createInfraction(infraction: any): Observable<any> {
-    const policiaId = localStorage.getItem('policiaId');
+  createInfraction(infraction: Infraction): Observable<any> {
     return this.http.post(this.baseUrl, infraction, {
       headers: this.createAuthorizationHeader()
     });
@@ -54,7 +56,7 @@ export class InfractionService {
   }
 
   // Función para actualizar una infracción por ID
-  updateInfraction(id: number, infraction: any): Observable<any> {
+  updateInfraction(id: number, infraction: Infraction): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, infraction, {
       headers: this.createAuthorizationHeader()
     });

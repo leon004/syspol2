@@ -5,19 +5,19 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuard implements CanActivate {
+export class JuezGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const expectedRole = route.data['expectedRole'];
     const userRole = this.authService.getUserRole();
+    console.log('JuezGuard: userRole =', userRole); // Añadir mensaje de depuración
 
-    if (userRole === expectedRole || userRole === 'Admin') {
+    if (userRole === 'Juez' || userRole === 'Admin') {
       return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
     }
+
+    this.router.navigate(['/access-denied-juez']);
+    return false;
   }
 }

@@ -11,7 +11,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   private createAuthorizationHeader(): HttpHeaders {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

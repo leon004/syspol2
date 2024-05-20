@@ -5,19 +5,19 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuard implements CanActivate {
+export class PoliciaGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const expectedRole = route.data['expectedRole'];
     const userRole = this.authService.getUserRole();
+    console.log('PoliciaGuard: userRole =', userRole); // Añadir mensaje de depuración
 
-    if (userRole === expectedRole || userRole === 'Admin') {
+    if (userRole === 'Policia' || userRole === 'Admin') {
       return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
     }
+
+    this.router.navigate(['/access-denied-policia']);
+    return false;
   }
 }

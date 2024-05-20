@@ -1,34 +1,63 @@
-<div class="bg-white shadow p-4 flex w-full mx-auto">
+<div class="bg-white shadow p-4 flex w-full mx-auto rounded-md">
   <span class="w-auto flex justify-end items-center text-gray-500 p-2">
     <i class="material-icons text-3xl">search</i>
   </span>
-  <input class="search-input flex-grow rounded p-2" type="text" placeholder="Buscar..." [(ngModel)]="searchText" (input)="applyFilter()">
-  <button class="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+  <input
+    class="search-input flex-grow rounded-md p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    type="text"
+    placeholder="Buscar..."
+    [(ngModel)]="searchText"
+    (input)="applyFilter()"
+  />
+  <button class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" type="submit">
     Buscar
   </button>
 </div>
 
-<div class="bg-white shadow-md rounded flex justify-center items-center p-4">
+<div class="bg-white shadow-md rounded-md flex justify-center items-center p-4 mt-6">
   <div class="flex flex-wrap gap-2 justify-center">
-    <button class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="filterByRecent()">
+    <button
+      class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      (click)="filterByRecent()"
+    >
       Más Reciente
     </button>
-    <button class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="filterByOldest()">
+    <button
+      class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      (click)="filterByOldest()"
+    >
       Más antigua
     </button>
-    <button class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="filterByBrand()">
+    <button
+      class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      (click)="filterByBrand()"
+    >
       Por Marca
     </button>
-    <button class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="filterByArea()">
+    <button
+      class="px-3 py-1 text-sm text-gray-800 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      (click)="filterByArea()"
+    >
       Por Área
     </button>
   </div>
 </div>
 
-<div class="flex flex-row flex-wrap justify-center items-stretch bg-gray-100 pb-8">
-  <div *ngFor="let infraction of filteredInfractions" class="flex max-w-lg rounded overflow-hidden shadow-lg mt-8 mx-8 cursor-pointer" (click)="viewInfractionDetails(infraction.id)">
-    <img class="w-1/3 object-cover" src="{{ infraction.imagenes }}" alt="Imagen del vehículo">
-    <div class="w-2/3 px-4 py-2">
+<div class="flex flex-wrap justify-center items-stretch bg-gray-100 pb-8 mt-6 gap-6">
+  <div
+    *ngFor="let infraction of filteredInfractions"
+    class="bg-white flex max-w-lg rounded-md overflow-hidden shadow-lg cursor-pointer transition-transform transform hover:scale-105"
+    (click)="viewInfractionDetails(infraction.id)"
+  >
+    <ng-container *ngIf="infraction.imagenes; else noImage">
+      <img
+        class="w-1/3 object-cover"
+        [src]="infraction.imagenes"
+        alt="Imagen del vehículo"
+      />
+    </ng-container>
+    <ng-template #noImage></ng-template>
+    <div class="w-full sm:w-2/3 px-4 py-2">
       <div class="font-bold text-lg mb-2">{{ infraction.placas }}</div>
       <p class="text-gray-700 text-sm">
         <strong>Fecha:</strong> {{ infraction.fecha | date: 'dd MMM yyyy hh:mm a' }}
@@ -42,14 +71,19 @@
       <p class="text-gray-700 text-sm">
         <strong>Motivo:</strong> {{ infraction.motivoDeMulta }}
       </p>
-      <div class="flex flex-wrap">
-        <span *ngFor="let tag of infraction.tags" class="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ tag }}</span>
+      <div class="flex flex-wrap mt-2">
+        <span
+          *ngFor="let tag of infraction.tags"
+          class="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+        >
+          {{ tag }}
+        </span>
       </div>
     </div>
   </div>
 </div>
 
-<footer class="bg-gray-800 text-white py-4">
+<footer class="bg-gray-800 text-white py-4 mt-8">
   <div class="container mx-auto flex flex-wrap justify-center">
     <div class="mx-4 mb-4">
       <h5 class="text-lg font-bold">Policia municipal de Morelia</h5>
@@ -59,7 +93,7 @@
     <div class="mx-4 mb-4">
       <h5 class="text-lg font-bold">Enlaces</h5>
       <ul>
-        <li><a href="/juez">Ver Multas</a></li>
+        <li><a href="/juez" class="hover:underline">Ver Multas</a></li>
       </ul>
     </div>
   </div>

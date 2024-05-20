@@ -9,7 +9,9 @@ import { MotivoDialogComponent } from '../../shared/motivo-dialog/motivo-dialog.
 import { LocationPickerDialogComponent } from '../../shared/location-picker-dialog/location-picker-dialog.component';
 import { UploadImageDialogComponent } from '../../shared/upload-image-dialog/upload-image-dialog.component';
 import { SharedService } from '../../services/shared.service'; // Importa el servicio compartido
-import { Router } from '@angular/router'; // Importa el Router
+import { Router } from '@angular/router'; // Inyecta el Router
+import jsPDF from 'jspdf';
+import { FirebaseStorageService } from '../../services/firebase-storage.service';
 
 interface Year {
   value: string;
@@ -40,8 +42,10 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
   motivosInfraccion: InfraccionMotivo[] = [];
   selectedMotivo: InfraccionMotivo | undefined;
   images: string[] = [];
+  previews: string[] = [];
   selectedLocation: { lat: number; lng: number; streetName?: string } | null = null;
   map: any;
+  selectedFiles: File[] = []; // Almacenar archivos seleccionados para subir
 
   @ViewChild('map') mapElement!: ElementRef;
 
@@ -59,7 +63,8 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
     private dataService: DataService,
     public dialog: MatDialog,
     private sharedService: SharedService, // Inyecta el servicio compartido
-    private router: Router // Inyecta el Router
+    private router: Router, // Inyecta el Router
+    private storageService: FirebaseStorageService // Servicio de almacenamiento en Firebase
   ) {
     // Obtener el policiaId y el usuario desde localStorage
     this.policiaId = localStorage.getItem('policiaId') || '';
@@ -151,16 +156,26 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const imageUrls = result.split(',');
-        this.images = this.images.concat(imageUrls);
-        this.infractionForm.get('step3.imagenes')?.setValue(this.images.join(','));
+        const files = result as File[];
+        this.selectedFiles = this.selectedFiles.concat(files);
+        this.infractionForm.get('step3.imagenes')?.setValue(this.selectedFiles.map(file => file.name).join(','));
+
+        // Generar vistas previas de las imágenes seleccionadas
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            this.previews.push(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        });
       }
     });
   }
 
-  removeImage(image: string): void {
-    this.images = this.images.filter(img => img !== image);
-    this.infractionForm.get('step3.imagenes')?.setValue(this.images.join(','));
+  removeImage(index: number): void {
+    this.selectedFiles.splice(index, 1);
+    this.previews.splice(index, 1);
+    this.infractionForm.get('step3.imagenes')?.setValue(this.selectedFiles.map(file => file.name).join(','));
   }
 
   openLocationPicker(): void {
@@ -179,10 +194,10 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openColorDialog(){
+  openColorDialog() {
     const dialogRef = this.dialog.open(ColorDialogComponent);
     dialogRef.afterClosed().subscribe(selectedColorName => {
-      if(selectedColorName){
+      if (selectedColorName) {
         console.log(`Selected Color: ${selectedColorName}`);
         this.infractionForm.get('step2')?.get('color')?.setValue(selectedColorName);
       }
@@ -192,13 +207,14 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
   openMotivoDialog() {
     const dialogRef = this.dialog.open(MotivoDialogComponent, {
       width: '600px',
-      height: '500px'
+      height: '500px',
+      data: { selectedMotivos: this.infractionForm.get('step3')?.get('motivoDeMulta')?.value }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.infractionForm.get('step3')?.get('motivoDeMulta')?.setValue(result.motivo);
-        this.infractionForm.get('step3')?.get('articuloFraccion')?.setValue(result.articulo);
+        this.infractionForm.get('step3')?.get('motivoDeMulta')?.setValue(result.motivos);
+        this.infractionForm.get('step3')?.get('articuloFraccion')?.setValue(result.articulos);
         this.selectedMotivo = result;
       }
     });
@@ -212,41 +228,106 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSubmit(): void {
+  async uploadImages(): Promise<string[]> {
+    const uploadPromises = this.selectedFiles.map(file => this.storageService.uploadFile(file));
+    const uploadedUrls = await Promise.all(uploadPromises);
+    return uploadedUrls;
+  }
+
+  goBack(): void {
+    this.router.navigate(['/home']);
+  }
+
+  async onSubmit(): Promise<void> {
     // Verificar primero que el formulario esté completo y válido.
     if (this.infractionForm.valid) {
       const formData = this.infractionForm.getRawValue();
 
-      // Procesar los datos del formulario antes de enviarlos
-      const infractionData = {
-        policiaId: parseInt(formData.step1.policiaId, 10),
-        placas: formData.step1.placas,
-        estado: formData.step1.estado,
-        marca: formData.step2.marca,
-        modelo: formData.step2.modelo,
-        year: parseInt(formData.step2.year, 10),
-        color: formData.step2.color,
-        motivoDeMulta: formData.step3.motivoDeMulta,
-        articuloFraccion: formData.step3.articuloFraccion,
-        ubicacion: formData.step3.ubicacion,
-        nombreInfractor: formData.step3.nombreInfractor,
-        imagenes: formData.step3.imagenes
-      };
+      try {
+        // Subir las imágenes a Firebase
+        const uploadedImageUrls = await this.uploadImages();
+        formData.step3.imagenes = uploadedImageUrls.join(',');
 
-      // Llamar al servicio para enviar los datos
-      this.infractionService.createInfraction(infractionData).subscribe({
-        next: response => {
-          console.log('Infracción registrada:', response);
-          this.infractionForm.reset();
-          this.router.navigate(['/home']); // Redirige al home después del registro exitoso
-        },
-        error: error => {
-          console.error('Error al registrar la infracción:', error);
-          this.formError = 'No se pudo registrar la infracción. Inténtalo de nuevo.';
-        }
-      });
+        console.log(formData); // Añadido para verificar los datos
+
+        // Procesar los datos del formulario antes de enviarlos
+        const infractionData = {
+          policiaId: parseInt(formData.step1.policiaId, 10),
+          placas: formData.step1.placas,
+          estado: formData.step1.estado,
+          marca: formData.step2.marca,
+          modelo: formData.step2.modelo,
+          year: parseInt(formData.step2.year, 10),
+          color: formData.step2.color,
+          motivoDeMulta: formData.step3.motivoDeMulta,
+          articuloFraccion: formData.step3.articuloFraccion,
+          ubicacion: formData.step3.ubicacion,
+          nombreInfractor: formData.step3.nombreInfractor,
+          imagenes: formData.step3.imagenes
+        };
+
+        // Llamar al servicio para enviar los datos
+        this.infractionService.createInfraction(infractionData).subscribe({
+          next: (response: any) => {
+            console.log('Infracción registrada:', response);
+            this.generatePDF(infractionData); // Generar y descargar el PDF
+            this.infractionForm.reset();
+            this.router.navigate(['/home']); // Redirige al home después del registro exitoso
+          },
+          error: (error: any) => {
+            console.error('Error al registrar la infracción:', error);
+            this.formError = 'No se pudo registrar la infracción. Inténtalo de nuevo.';
+          }
+        });
+      } catch (error) {
+        console.error('Error al subir las imágenes:', error);
+        this.formError = 'No se pudo subir las imágenes. Inténtalo de nuevo.';
+      }
     } else {
       this.formError = 'Completa todos los campos requeridos.';
     }
+  }
+
+  private generatePDF(data: any): void {
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: [210, 297] // Tamaño A4
+    });
+
+    doc.setFontSize(12);
+    doc.text('Registro de Infracción', 10, 20);
+
+    doc.setFontSize(10);
+    let y = 30;
+
+    const addText = (label: string, value: string) => {
+      doc.text(`${label}:`, 10, y);
+      doc.text(doc.splitTextToSize(value, 180), 10, y + 6);
+      y += 14;
+    };
+
+    addText('ID del Policía', data.policiaId.toString());
+    addText('Placas', data.placas);
+    addText('Estado', data.estado);
+    addText('Marca', data.marca);
+    addText('Modelo', data.modelo);
+    addText('Año', data.year.toString());
+    addText('Color', data.color);
+    addText('Motivo de la Multa', data.motivoDeMulta);
+    addText('Artículo/Fracción', data.articuloFraccion);
+    addText('Ubicación', data.ubicacion);
+    addText('Nombre del Infractor', data.nombreInfractor);
+
+    const filename = `${data.placas}-${this.getCurrentDate()}.pdf`;
+    doc.save(filename);
+  }
+
+  private getCurrentDate(): string {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses son indexados desde 0
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   }
 }

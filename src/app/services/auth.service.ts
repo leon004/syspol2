@@ -10,14 +10,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // Función para iniciar sesión
   login(credentials: { usuario: string, password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, credentials, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
 
-  // Función para registrar un nuevo usuario
   register(user: {
     nombre: string,
     apellidoPaterno: string,
@@ -29,5 +27,24 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/register`, user, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log('AuthService: payload.rol =', payload.rol); // Añadir mensaje de depuración
+        return payload.rol;
+      } catch (e) {
+        console.error('Error parsing token:', e);
+        return null;
+      }
+    }
+    return null;
   }
 }

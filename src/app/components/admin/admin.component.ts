@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { InfractionService } from '../../services/infraction.service';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +13,6 @@ export class AdminComponent implements OnInit {
   users: any[] = [];
   infractions: any[] = [];
   selectedUser: any = null;
-  selectedInfraction: any = null;
 
   constructor(private userService: UserService, private infractionService: InfractionService) {}
 
@@ -44,10 +45,6 @@ export class AdminComponent implements OnInit {
 
   selectUser(user: any) {
     this.selectedUser = { ...user };
-  }
-
-  selectInfraction(infraction: any) {
-    this.selectedInfraction = { ...infraction };
   }
 
   saveUser() {
@@ -85,38 +82,24 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  saveInfraction() {
-    if (this.selectedInfraction.id) {
-      this.infractionService.updateInfraction(this.selectedInfraction.id, this.selectedInfraction).subscribe(
-        () => {
-          this.loadInfractions();
-          this.selectedInfraction = null;
-        },
-        error => {
-          console.error('Error updating infraction:', error);
-        }
-      );
-    } else {
-      this.infractionService.createInfraction(this.selectedInfraction).subscribe(
-        () => {
-          this.loadInfractions();
-          this.selectedInfraction = null;
-        },
-        error => {
-          console.error('Error creating infraction:', error);
-        }
-      );
-    }
+  exportUsersToExcel() {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.users);
+    const workbook: XLSX.WorkBook = { Sheets: { 'Usuarios': worksheet }, SheetNames: ['Usuarios'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'usuarios');
   }
 
-  deleteInfraction(infractionId: number) {
-    this.infractionService.deleteInfraction(infractionId).subscribe(
-      () => {
-        this.loadInfractions();
-      },
-      error => {
-        console.error('Error deleting infraction:', error);
-      }
-    );
+  exportInfractionsToExcel() {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.infractions);
+    const workbook: XLSX.WorkBook = { Sheets: { 'Infracciones': worksheet }, SheetNames: ['Infracciones'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'infracciones');
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    saveAs(data, `${fileName}_export_${new Date().getTime()}.xlsx`);
   }
 }
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
