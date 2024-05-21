@@ -33,11 +33,20 @@
                 </div>
 
                 <div>
-                  <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
-                  <select formControlName="estado" id="estado" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.viewValue }}</option>
+                  <label for="pais" class="block text-sm font-medium text-gray-700">Pais</label>
+                  <select formControlName="pais" id="pais" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option *ngFor="let pais of paises" [value]="pais.value">{{ pais.viewValue }}</option>
                   </select>
                 </div>
+
+                <div>
+                  <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
+                  <select formControlName="estado" id="estado" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                  </select>
+                </div>
+
+                
               </div>
               <div class="flex justify-between pt-4">
                 <button mat-button (click)="goBackToHome()" class="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-500">Atrás</button>

@@ -36,7 +36,8 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
   formError: string | null = null;
   marcas: any[] = [];
   modelos: string[] = [];
-  estados: any[] = [];
+  paises: any[] = [];
+  estados: string[] = [];
   years: Year[] = [];
   policiaId: string;
   motivosInfraccion: InfraccionMotivo[] = [];
@@ -74,7 +75,7 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
       step1: this.fb.group({
         policiaId: [{ value: this.policiaId, disabled: true }, Validators.required],
         placas: ['', Validators.required],
-        pais: ['México'], // País predeterminado
+        pais: ['', Validators.required], // País predeterminado
         estado: ['', Validators.required]
       }),
       step2: this.fb.group({
@@ -97,9 +98,9 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
       this.marcas = marcas;
     });
 
-    this.dataService.getEstados().subscribe(estados => {
-      this.estados = estados;
-    });
+    this.dataService.getPaises().subscribe(paises => {
+      this.paises = paises;
+    })
 
     this.dataService.getYears().subscribe(years => {
       this.years = years;
@@ -126,6 +127,18 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
       }, error => {
         console.error('Error al cargar modelos:', error);
         this.modelos = [];
+      });
+    }
+    // Actualizar la lista de estados cuando se cambia el país
+    const paisControl = this.infractionForm.get('step1.pais');
+    if (paisControl) {
+      paisControl.valueChanges.pipe(
+        switchMap(pais => this.dataService.getEstadoPorPais(pais))
+      ).subscribe(estados => {
+        this.estados = estados;
+      }, error => {
+        console.error('Error al cargar estados:', error);
+        this.estados = [];
       });
     }
   }
@@ -257,6 +270,7 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
         const infractionData = {
           policiaId: parseInt(formData.step1.policiaId, 10),
           placas: formData.step1.placas,
+          pais: formData.step1.pais,
           estado: formData.step1.estado,
           marca: formData.step2.marca,
           modelo: formData.step2.modelo,

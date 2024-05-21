@@ -1,10 +1,6 @@
 [
-  { "value": "bmw", "viewValue": "BMW",
-  "logo": "assets/images/logos/bmw.png"
-},
-  { "value": "buick",
-   "viewValue": "BUICK",
-   "logo": "assets/images/logos/bmw.png" },
+  { "value": "bmw", "viewValue": "BMW","logo": "assets/images/logos/bmw.png"},
+  { "value": "buick","viewValue": "BUICK","logo": "assets/images/logos/bmw.png" },
   { "value": "cadillac", "viewValue": "Cadillac","logo": "assets/images/logos/bmw.png" },
   { "value": "changan", "viewValue": "Changan","logo": "assets/images/logos/bmw.png" },
   { "value": "chery", "viewValue": "Chery","logo": "assets/images/logos/bmw.png" },

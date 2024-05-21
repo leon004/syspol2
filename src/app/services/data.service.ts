@@ -20,9 +20,17 @@ export class DataService {
     );
   }
 
-  getEstados(): Observable<any[]> {
-    return this.http.get<any[]>('../assets/estados.json');
+  getPaises(): Observable<any[]> {
+    return this.http.get<any[]>('../assets/paises.json');
   }
+  getEstadoPorPais(pais: string): Observable<string[]> {
+    return this.http.get<{[key: string]: string[]}>('../assets/estados.json').pipe(
+      map(estados => estados[pais] || [])
+    );
+  }
+  // getEstados(): Observable<any[]> {
+  //   return this.http.get<any[]>('../assets/estados.json');
+  // }
 
   getYears(): Observable<any[]> {
     return this.http.get<any[]>('/assets/years.json');
