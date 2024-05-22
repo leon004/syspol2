@@ -1,31 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InfractionService } from '../../services/infraction.service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-juez',
   templateUrl: './juez.component.html',
   styleUrls: ['./juez.component.css']
 })
-export class JuezComponent {
+export class JuezComponent implements OnInit {
   searchText: string = '';
   infractions: any[] = [];
   filteredInfractions: any[] = [];
+  isLoading: boolean = false;
 
-  constructor(private infractionService: InfractionService, private router: Router) {}
+  constructor(
+    private infractionService: InfractionService, 
+    private router: Router,
+    private loaderService: LoaderService
+  ) {}
 
   ngOnInit() {
+    this.loaderService.loading$.subscribe((loading) => {
+      this.isLoading = loading;
+    });
     this.loadInfractions();
   }
 
   loadInfractions() {
+    this.loaderService.show();
     this.infractionService.getAllInfractions().subscribe(
-      (response: any) => {
-        this.infractions = response;
+      (response: any[]) => { // Aquí asumo que response es un array de cualquier tipo de objeto
+        // Ordenar las infracciones por fecha de manera descendente
+        this.infractions = response.sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
         this.applyFilter();
+        this.loaderService.hide();
       },
       (error: any) => {
         console.error('Error fetching infractions:', error);
+        this.loaderService.hide();
       }
     );
   }

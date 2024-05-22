@@ -1,0 +1,60 @@
+@keyframes ldio-x2uulkbinbj {
+    0% { transform: translate(8.68px,82.46px) scale(0); }
+   25% { transform: translate(8.68px,82.46px) scale(0); }
+   50% { transform: translate(8.68px,82.46px) scale(1); }
+   75% { transform: translate(82.46px,82.46px) scale(1); }
+  100% { transform: translate(156.24px,82.46px) scale(1); }
+ }
+ @keyframes ldio-x2uulkbinbj-r {
+    0% { transform: translate(156.24px,82.46px) scale(1); }
+  100% { transform: translate(156.24px,82.46px) scale(0); }
+ }
+ @keyframes ldio-x2uulkbinbj-c {
+    0% { background: #011d4d }
+   25% { background: #dedede }
+   50% { background: #e0f596 }
+   75% { background: #8a8f9f }
+  100% { background: #011d4d }
+ }
+ .ldio-x2uulkbinbj div {
+   position: absolute;
+   width: 52.08px;
+   height: 52.08px;
+   border-radius: 50%;
+   transform: translate(82.46px,82.46px) scale(1);
+   background: #011d4d;
+   animation: ldio-x2uulkbinbj 2.380952380952381s infinite cubic-bezier(0,0.5,0.5,1);
+ }
+ .ldio-x2uulkbinbj div:nth-child(1) {
+   background: #8a8f9f;
+   transform: translate(156.24px,82.46px) scale(1);
+   animation: ldio-x2uulkbinbj-r 0.5952380952380952s infinite cubic-bezier(0,0.5,0.5,1), ldio-x2uulkbinbj-c 2.380952380952381s infinite step-start;
+ }.ldio-x2uulkbinbj div:nth-child(2) {
+   animation-delay: -0.5952380952380952s;
+   background: #011d4d;
+ }.ldio-x2uulkbinbj div:nth-child(3) {
+   animation-delay: -1.1904761904761905s;
+   background: #8a8f9f;
+ }.ldio-x2uulkbinbj div:nth-child(4) {
+   animation-delay: -1.7857142857142856s;
+   background: #e0f596;
+ }.ldio-x2uulkbinbj div:nth-child(5) {
+   animation-delay: -2.380952380952381s;
+   background: #dedede;
+ }
+ .loadingio-spinner-ellipsis-nq4q5u6dq7r {
+   width: 200px;
+   height: 200px;
+   display: inline-block;
+   overflow: hidden;
+   background: #ffffff;
+ }
+ .ldio-x2uulkbinbj {
+   width: 100%;
+   height: 100%;
+   position: relative;
+   transform: translateZ(0) scale(1);
+   backface-visibility: hidden;
+   transform-origin: 0 0; /* see note above */
+ }
+ .ldio-x2uulkbinbj div { box-sizing: content-box; }

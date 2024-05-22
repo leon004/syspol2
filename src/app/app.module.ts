@@ -47,6 +47,7 @@ import { AccessDeniedJuezComponent } from './components/access-denied-juez/acces
 import { AccessDeniedPoliciaComponent } from './components/access-denied-policia/access-denied-policia.component';
 import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { ConsultaComponent } from './components/consulta/consulta.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { ConsultaComponent } from './components/consulta/consulta.component';
     AccessDeniedJuezComponent,
     AccessDeniedPoliciaComponent,
     AdminNavComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
