@@ -13,6 +13,22 @@ import { ConsultaComponent } from '../consulta/consulta.component';
 export class PoliceHomeComponent {
   vehicleForm: FormGroup;
   inputLabel: string = "Placas";
+  showError: boolean = false; // Bandera para controlar la visibilidad del mensaje de error
+
+  // Definimos los patrones de validación
+  placasPatterns = [
+    /^[a-zA-Z]{3}-?\d{3}-?[a-zA-Z]$/,  // AAA-123-A  automivil
+    /^[a-zA-Z]{2}-?\d{4}-?[a-zA-Z]$/,  // AA-1234-A  camioneta
+    /^[a-zA-Z0-9]{6}$/,                // ABC123 or 123ABC motocicleta
+    /^[a-zA-Z]-?\d{5}-?[a-zA-Z]$/,       // A-12345-A  transporte publico
+    /^[a-zA-Z]-?\d{3}-?[a-zA-Z]{3}$/,    // A-123-AAA  taxi
+    /^UCD-\d{5}$/,                      // UCD-12345  sin legalizar
+    /^UCD-\d{6}$/                      // UCD-123456  sin legalizar
+    
+  ];
+
+  // Combinamos todos los patrones en una sola expresión regular
+  combinedPlacasPattern = new RegExp(this.placasPatterns.map(p => p.source).join('|'));
 
   constructor(
     private fb: FormBuilder,
@@ -21,7 +37,7 @@ export class PoliceHomeComponent {
     private dialog: MatDialog
   ) {
     this.vehicleForm = this.fb.group({
-      inputField: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]{3}-?\d{3}-?[a-zA-Z]$/)]],
+      inputField: ['', [Validators.required, Validators.pattern(this.combinedPlacasPattern)]],
       inputType: ['placas']
     });
 
@@ -32,13 +48,15 @@ export class PoliceHomeComponent {
         this.vehicleForm.get('inputField')!.updateValueAndValidity();
       } else {
         this.inputLabel = "Placas";
-        this.vehicleForm.get('inputField')!.setValidators([Validators.required, Validators.pattern(/^[a-zA-Z]{3}-?\d{3}-?[a-zA-Z]$/)]);
+        this.vehicleForm.get('inputField')!.setValidators([Validators.required, Validators.pattern(this.combinedPlacasPattern)]);
         this.vehicleForm.get('inputField')!.updateValueAndValidity();
       }
     });
   }
 
   search() {
+    this.showError = false; // Reiniciar la bandera de error
+
     if (this.vehicleForm.valid) {
       const platesOrVin = this.vehicleForm.get('inputField')!.value.replace(/-/g, '').toUpperCase();
       this.sharedService.updatePlates(platesOrVin);
@@ -53,6 +71,9 @@ export class PoliceHomeComponent {
           this.router.navigate(['/infraction']);
         }
       });
+    } else {
+      // Mostrar mensaje de error solo cuando se haga clic en el botón de búsqueda
+      this.showError = true;
     }
   }
 
