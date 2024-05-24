@@ -1,6 +1,7 @@
 [
     { "value": "mexico", "viewValue": "Mexico"},
     { "value": "estadosUnidos","viewValue": "Estados Unidos"},
-    { "value": "canada", "viewValue": "Canada"}
+    { "value": "canada", "viewValue": "Canada"},
+    {"value": "otro", "viewValue": "Otro"}
 ]
 

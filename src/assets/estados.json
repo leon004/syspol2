@@ -96,5 +96,8 @@
     "Quebec",
     "Saskatchewan",
     "Terranova y Labrador"
+  ],
+  "otro": [
+    "otro"
   ]
 }
