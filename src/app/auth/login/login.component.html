@@ -1,27 +1,26 @@
-<section class="bg-white">
-  <div class="lg:grid lg:min-h-screen lg:grid-cols-12">
-    <aside class="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
-      <img
-        alt="Login Image"
-        src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-    </aside>
-
-    <main class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-      <div class="max-w-xl lg:max-w-3xl">
-
-
-        <h1 class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-          Bienvenido a Syspol2
-        </h1>
-
-        <p class="mt-4 leading-relaxed text-gray-500">
-          Inicia sesión para continuar.
-        </p>
-
-        <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="col-span-6">
+<div class="relative min-h-screen lg:min-h-screen bg-blue-900">
+  <ul class="circles absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <div class="flex items-center justify-center min-h-screen ml-8 mb-8 mr-8">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+      <div class="text-center">
+        <img src="../../../assets/images/logo.png" alt="Logo policia Morelia" class="mx-auto w-32 h-32 md:w-48 md:h-48 rounded-full mb-4">
+        <h3 class="text-xl font-medium text-gray-900">Bienvenido a Syspol2</h3>
+        <p class="text-gray-600">Inicia sesión para continuar.</p>
+      </div>
+      <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="col-span-6">
+          <div class="mb-4">
             <label for="usuario" class="block text-sm font-medium text-gray-700">Usuario</label>
             <input
               id="usuario"
@@ -29,7 +28,7 @@
               type="text"
               formControlName="usuario"
               required
-              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+              class="w-full p-2 mt-1 border border-gray-300 rounded"
               placeholder="Nombre de usuario"
               [ngClass]="{ 'is-invalid': loginForm.get('usuario')?.invalid && loginForm.get('usuario')?.touched }"
             />
@@ -37,8 +36,8 @@
               El usuario es requerido.
             </div>
           </div>
-
-          <div class="col-span-6">
+      
+          <div class="mb-4">
             <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
             <input
               id="password"
@@ -46,7 +45,7 @@
               type="password"
               formControlName="password"
               required
-              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+              class="w-full p-2 mt-1 border border-gray-300 rounded"
               placeholder="Contraseña"
               [ngClass]="{ 'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }"
             />
@@ -54,8 +53,8 @@
               La contraseña es requerida.
             </div>
           </div>
-
-          <div class="col-span-6">
+      
+          <div class="mb-4">
             <button
               type="submit"
               class="w-full inline-block rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
@@ -64,12 +63,17 @@
               Iniciar sesión
             </button>
           </div>
-
+      
           <div *ngIf="loginError" class="text-red-500 text-sm mt-3 text-center" role="alert">
             {{ loginError }}
           </div>
-        </form>
+        </div>
+      </form>
+      <div class="text-center text-xs text-gray-500">
+        <span>
+          Syspol2
+        </span>
       </div>
-    </main>
+    </div>
   </div>
-</section>
+</div>
