@@ -12,6 +12,8 @@ import { SharedService } from '../../services/shared.service'; // Importa el ser
 import { Router } from '@angular/router'; // Inyecta el Router
 import jsPDF from 'jspdf';
 import { FirebaseStorageService } from '../../services/firebase-storage.service';
+import Swal from 'sweetalert2';
+
 
 interface Year {
   value: string;
@@ -255,53 +257,84 @@ export class InfractionFormComponent implements OnInit, AfterViewInit {
   }
 
   async onSubmit(): Promise<void> {
-    // Verificar primero que el formulario esté completo y válido.
-    if (this.infractionForm.valid) {
-      const formData = this.infractionForm.getRawValue();
+    // Verificar si el botón presionado es el de "Registrar Infracción"
+    const submitButton = document.activeElement as HTMLButtonElement;
+    if (submitButton && submitButton.textContent?.includes('Registrar Infracción')) {
+      // Verificar primero que el formulario esté completo y válido.
+      if (this.infractionForm.valid) {
+        const formData = this.infractionForm.getRawValue();
 
-      try {
-        // Subir las imágenes a Firebase
-        const uploadedImageUrls = await this.uploadImages();
-        formData.step3.imagenes = uploadedImageUrls.join(',');
+        try {
+          // Subir las imágenes a Firebase
+          const uploadedImageUrls = await this.uploadImages();
+          formData.step3.imagenes = uploadedImageUrls.join(',');
 
-        console.log(formData); // Añadido para verificar los datos
+          console.log(formData); // Añadido para verificar los datos
 
-        // Procesar los datos del formulario antes de enviarlos
-        const infractionData = {
-          policiaId: parseInt(formData.step1.policiaId, 10),
-          placas: formData.step1.placas,
-          pais: formData.step1.pais,
-          estado: formData.step1.estado,
-          marca: formData.step2.marca,
-          modelo: formData.step2.modelo,
-          year: parseInt(formData.step2.year, 10),
-          color: formData.step2.color,
-          motivoDeMulta: formData.step3.motivoDeMulta,
-          articuloFraccion: formData.step3.articuloFraccion,
-          ubicacion: formData.step3.ubicacion,
-          nombreInfractor: formData.step3.nombreInfractor,
-          imagenes: formData.step3.imagenes
-        };
+          // Procesar los datos del formulario antes de enviarlos
+          const infractionData = {
+            policiaId: parseInt(formData.step1.policiaId, 10),
+            placas: formData.step1.placas,
+            pais: formData.step1.pais,
+            estado: formData.step1.estado,
+            marca: formData.step2.marca,
+            modelo: formData.step2.modelo,
+            year: parseInt(formData.step2.year, 10),
+            color: formData.step2.color,
+            motivoDeMulta: formData.step3.motivoDeMulta,
+            articuloFraccion: formData.step3.articuloFraccion,
+            ubicacion: formData.step3.ubicacion,
+            nombreInfractor: formData.step3.nombreInfractor,
+            imagenes: formData.step3.imagenes
+          };
 
-        // Llamar al servicio para enviar los datos
-        this.infractionService.createInfraction(infractionData).subscribe({
-          next: (response: any) => {
-            console.log('Infracción registrada:', response);
-            this.generatePDF(infractionData); // Generar y descargar el PDF
-            this.infractionForm.reset();
-            this.router.navigate(['/home']); // Redirige al home después del registro exitoso
-          },
-          error: (error: any) => {
-            console.error('Error al registrar la infracción:', error);
-            this.formError = 'No se pudo registrar la infracción. Inténtalo de nuevo.';
-          }
+          // Llamar al servicio para enviar los datos
+          this.infractionService.createInfraction(infractionData).subscribe({
+            next: (response: any) => {
+              Swal.fire({
+                title: 'Éxito',
+                text: 'La infracción se ha registrado correctamente.',
+                icon: 'success',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#011D4D'
+              });
+              this.generatePDF(infractionData); // Generar y descargar el PDF
+              this.infractionForm.reset();
+              this.router.navigate(['/home']); // Redirige al home después del registro exitoso
+            },
+            error: (error: any) => {
+              Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error al registrar la infracción. Inténtalo de nuevo.',
+                icon: 'error',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#011D4D'
+              });
+              // console.error('Error al registrar la infracción:', error);
+              // this.formError = 'No se pudo registrar la infracción. Inténtalo de nuevo.';
+            }
+          });
+        } catch (error) {
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo subir las imágenes. Inténtalo de nuevo.',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#011D4D'
+          });
+          // console.error('Error al subir las imágenes:', error);
+          // this.formError = 'No se pudo subir las imágenes. Inténtalo de nuevo.';
+        }
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Por favor, completa todos los campos requeridos.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#011D4D'
         });
-      } catch (error) {
-        console.error('Error al subir las imágenes:', error);
-        this.formError = 'No se pudo subir las imágenes. Inténtalo de nuevo.';
+        // this.formError = 'Completa todos los campos requeridos.';
       }
-    } else {
-      this.formError = 'Completa todos los campos requeridos.';
     }
   }
 
