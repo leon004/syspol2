@@ -12,10 +12,15 @@ export class JuezComponent implements OnInit {
   searchText: string = '';
   infractions: any[] = [];
   filteredInfractions: any[] = [];
+  paginatedInfractions: any[] = [];
   isLoading: boolean = false;
+  showAll: boolean = false;
+  currentPage: number = 0;
+  itemsPerPage: number = 10;
+  totalPages: number[] = [];
 
   constructor(
-    private infractionService: InfractionService, 
+    private infractionService: InfractionService,
     private router: Router,
     private loaderService: LoaderService
   ) {}
@@ -30,10 +35,10 @@ export class JuezComponent implements OnInit {
   loadInfractions() {
     this.loaderService.show();
     this.infractionService.getAllInfractions().subscribe(
-      (response: any[]) => { // Aquí asumo que response es un array de cualquier tipo de objeto
-        // Ordenar las infracciones por fecha de manera descendente
+      (response: any[]) => {
         this.infractions = response.sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
         this.applyFilter();
+        this.calculateTotalPages();
         this.loaderService.hide();
       },
       (error: any) => {
@@ -57,33 +62,64 @@ export class JuezComponent implements OnInit {
           infraction.ubicacion.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
+    this.paginate();
   }
 
   filterByRecent() {
     this.filteredInfractions = [...this.infractions].sort((a, b) => {
       return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
     });
+    this.paginate();
   }
 
   filterByOldest() {
     this.filteredInfractions = [...this.infractions].sort((a, b) => {
       return new Date(a.fecha).getTime() - new Date(b.fecha).getTime();
     });
+    this.paginate();
   }
 
   filterByBrand() {
     this.filteredInfractions = [...this.infractions].sort((a, b) => {
       return a.marca.localeCompare(b.marca);
     });
+    this.paginate();
   }
 
   filterByArea() {
     this.filteredInfractions = [...this.infractions].sort((a, b) => {
       return a.ubicacion.localeCompare(b.ubicacion);
     });
+    this.paginate();
   }
 
   viewInfractionDetails(infractionId: number) {
     this.router.navigate(['/car-detail', infractionId]);
+  }
+
+  paginate() {
+    if (this.showAll) {
+      this.paginatedInfractions = this.filteredInfractions;
+    } else {
+      const start = this.currentPage * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      this.paginatedInfractions = this.filteredInfractions.slice(start, end);
+    }
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+    this.paginate();
+  }
+
+  toggleShowAll() {
+    this.showAll = !this.showAll;
+    this.paginate();
+  }
+
+  calculateTotalPages() {
+    const totalItems = this.filteredInfractions.length;
+    const pages = Math.ceil(totalItems / this.itemsPerPage);
+    this.totalPages = Array(pages).fill(0).map((x, i) => i);
   }
 }
