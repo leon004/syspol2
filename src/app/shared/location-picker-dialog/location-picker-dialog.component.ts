@@ -19,14 +19,23 @@ export class LocationPickerDialogComponent implements AfterViewInit {
     }
   }
 
-  private loadMap(): void {
-    import('leaflet').then(L => {
-      this.map = L.map('map').setView([51.505, -0.09], 13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap'
-      }).addTo(this.map);
+  private async loadMap(): Promise<void> {
+    const L = await import('leaflet');
+    this.setCustomIcons(L);
+    this.map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(this.map);
 
-      this.locateUser(L);
+    this.locateUser(L);
+  }
+
+  private setCustomIcons(L: any): void {
+    L.Icon.Default.imagePath = 'assets/leaflet/';
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: 'assets/leaflet/marker-icon-2x.png',
+      iconUrl: 'assets/leaflet/marker-icon.png',
+      shadowUrl: 'assets/leaflet/marker-shadow.png',
     });
   }
 

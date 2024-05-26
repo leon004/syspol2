@@ -24,7 +24,7 @@ export class PoliceHomeComponent {
     /^[a-zA-Z]-?\d{3}-?[a-zA-Z]{3}$/,    // A-123-AAA  taxi
     /^UCD-\d{5}$/,                      // UCD-12345  sin legalizar
     /^UCD-\d{6}$/                      // UCD-123456  sin legalizar
-    
+
   ];
 
   // Combinamos todos los patrones en una sola expresión regular
