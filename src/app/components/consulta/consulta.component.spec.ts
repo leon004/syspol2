@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ConsultaComponent } from './consulta.component';
+import { InfractionService } from '../../services/infraction.service';
 
 describe('ConsultaComponent', () => {
   let component: ConsultaComponent;
@@ -8,10 +12,20 @@ describe('ConsultaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ConsultaComponent]
+      imports: [
+        HttpClientTestingModule,
+        MatDialogModule,
+        RouterTestingModule
+      ],
+      declarations: [ConsultaComponent],
+      providers: [
+        InfractionService,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: { platesOrVin: 'ABC123' } }
+      ]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ConsultaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
